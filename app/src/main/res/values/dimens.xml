@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_appbar_height">56dp</dimen>
+    <dimen name="dimen_appbar_text">28sp</dimen>
+
+    <dimen name="dimen_title">35dp</dimen>
+
+    <dimen name="dimen_normal">20dp</dimen>
+    <dimen name="dimen_main_btn_text">20sp</dimen>
+    <dimen name="dimen_small_spacing">10dp</dimen>
+    <dimen name="dimen_middle_spacing">15dp</dimen>
+
+    <dimen name="dimen_0">0dp</dimen>
+    <dimen name="dimen_1">1dp</dimen>
+    <dimen name="dimen_main_btn">56dp</dimen>
+</resources>
