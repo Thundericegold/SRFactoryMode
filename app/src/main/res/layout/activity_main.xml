@@ -204,6 +204,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <Button
+                    android:id="@+id/camera"
                     android:layout_width="@dimen/dimen_0"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"
@@ -216,6 +217,7 @@
                     android:layout_height="@dimen/dimen_main_btn" />
 
                 <Button
+                    android:id="@+id/dial"
                     android:layout_width="@dimen/dimen_0"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"
@@ -229,6 +231,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <Button
+                    android:id="@+id/single_test"
                     android:layout_width="@dimen/dimen_0"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"
@@ -241,6 +244,7 @@
                     android:layout_height="@dimen/dimen_main_btn" />
 
                 <Button
+                    android:id="@+id/test_report"
                     android:layout_width="@dimen/dimen_0"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"

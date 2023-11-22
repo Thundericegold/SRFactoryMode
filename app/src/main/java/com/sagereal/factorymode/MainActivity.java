@@ -1,21 +1,28 @@
 package com.sagereal.factorymode;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sagereal.factorymode.activities.SingleTestActivity;
+import com.sagereal.factorymode.activities.TestReportActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,6 +32,8 @@ import java.text.DecimalFormat;
 public class MainActivity extends AppCompatActivity {
 
     double batteryCapacity;
+    private final String phone = "tel:112";
+    private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         TextView romTextView = findViewById(R.id.rom);
         TextView screenSizeTextView = findViewById(R.id.screen_size);
         TextView screenResolutionTextView = findViewById(R.id.screen_resolution);
+
+        Button cameraButton = findViewById(R.id.camera);
+        Button dialButton = findViewById(R.id.dial);
+        Button singleTestButton = findViewById(R.id.single_test);
+        Button testReportButton = findViewById(R.id.test_report);
 
         deviceNameTextView.setText(deviceName);
         deviceTypeTextView.setText(deviceType);
@@ -74,10 +88,85 @@ public class MainActivity extends AppCompatActivity {
             int height = wm.getDefaultDisplay().getHeight();
             screenResolution = width + "X" + height;
         }
-
         screenResolutionTextView.setText(screenResolution);
 
 
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.camera:
+                        System.out.println("asd");
+                        break;
+                    case R.id.dial:
+                        callPhoneUI();
+                        break;
+                    case R.id.single_test:
+                        Intent intent1 = new Intent(MainActivity.this, SingleTestActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.test_report:
+                        Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
+                        startActivity(intent2);
+                        break;
+                }
+
+            }
+        };
+
+        cameraButton.setOnClickListener(onClickListener);
+        dialButton.setOnClickListener(onClickListener);
+        singleTestButton.setOnClickListener(onClickListener);
+        testReportButton.setOnClickListener(onClickListener);
+
+    }
+
+    // 判断是否有拨号权限
+    private boolean ifHaveCallPhonePermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // 动态申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    // 申请权限回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CALL_PHONE_REQUEST_CODE) {
+            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "请添加拨号权限后重试", Toast.LENGTH_SHORT).show();
+            } else {
+//                callPhone();
+//                callUI();
+                callPhoneUI();
+            }
+        }
+    }
+
+    // 直接拨号
+    private void callPhone() {
+        if (ifHaveCallPhonePermission()) {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(phone)));
+        }
+    }
+
+    // 跳转到拨号界面
+    private void callUI() {
+        if (ifHaveCallPhonePermission()) {
+            startActivity(new Intent(Intent.ACTION_CALL_BUTTON));
+        }
+    }
+
+
+    // 跳转到拨号界面 同时附带号码
+    private void callPhoneUI() {
+        if (ifHaveCallPhonePermission()) {
+            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phone)));
+        }
     }
 
     /**
