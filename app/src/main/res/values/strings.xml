@@ -8,11 +8,10 @@
     <string name="android_version">Android Version:</string>
     <string name="ram">RAM:</string>
     <string name="rom">ROM:</string>
-    <string name="g">G</string>
     <string name="battery_size">Battery Size:</string>
-    <string name="mah">mAh:</string>
+    <string name="mah">mAh</string>
     <string name="screen_size">Screen Size:</string>
-    <string name="inches">Inches:</string>
+    <string name="inches">Inches</string>
     <string name="screen_resolution">Screen Resolution:</string>
     <string name="pixels">Pixels</string>
     <string name="camera">Camera</string>

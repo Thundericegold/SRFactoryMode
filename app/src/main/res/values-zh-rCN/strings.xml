@@ -9,7 +9,6 @@
     <string name="android_version">Android版本:</string>
     <string name="ram">RAM:</string>
     <string name="rom">ROM:</string>
-    <string name="g">G</string>
     <string name="battery_size">电池大小:</string>
     <string name="mah">毫安</string>
     <string name="screen_size">屏幕尺寸:</string>

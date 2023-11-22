@@ -21,225 +21,236 @@
             android:textColor="@color/white"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/dimen_small_spacing"
-        android:paddingRight="@dimen/dimen_small_spacing"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_middle_spacing"
-            android:layout_marginBottom="@dimen/dimen_middle_spacing"
-            android:text="@string/basic_information"
-            android:textSize="@dimen/dimen_title"
-            android:layout_gravity="center_horizontal"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/device_name"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/device_name_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/device_type"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/device_type_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dimen_small_spacing"
+            android:paddingRight="@dimen/dimen_small_spacing"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/version_number"
-                android:layout_marginBottom="@dimen/dimen_0"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/version_number_test" />
-        </LinearLayout>
+                android:minHeight="@dimen/dimen_main_btn"
+                android:layout_marginTop="@dimen/dimen_middle_spacing"
+                android:layout_marginBottom="@dimen/dimen_middle_spacing"
+                android:text="@string/basic_information"
+                android:textSize="@dimen/dimen_title"
+                android:layout_gravity="center_horizontal"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/android_version"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/android_version_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/device_name"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ram"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ram_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/device_type"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/device_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rom"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rom_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/version_number"
+                    android:layout_marginBottom="@dimen/dimen_0"/>
+                <TextView
+                    android:id="@+id/version_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/battery_size"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/battery_size_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/android_version"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/android_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/screen_size"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/screen_size"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ram"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/ram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/NormalLinearLayout"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/screen_resolution"
-                android:theme="@style/NormalText"/>
-            <TextView
-                android:layout_width="wrap_content"
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rom"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/rom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/screen_resolution_test"
-                android:theme="@style/NormalText"/>
-        </LinearLayout>
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/battery_size"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/battery_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1"
-            android:background="@color/grey_text"
-            android:layout_marginTop="@dimen/dimen_small_spacing"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/screen_size"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/screen_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="@dimen/dimen_0"
-                android:layout_height="@dimen/dimen_main_btn"
-                android:layout_weight="1"
-                android:text="@string/camera"
-                android:theme="@style/NormalButton"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/NormalLinearLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/screen_resolution"
+                    android:theme="@style/NormalText"/>
+                <TextView
+                    android:id="@+id/screen_resolution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/NormalText"/>
+            </LinearLayout>
 
             <View
-                android:layout_width="@dimen/dimen_small_spacing"
-                android:layout_height="@dimen/dimen_main_btn" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/grey_text"
+                android:layout_marginTop="@dimen/dimen_small_spacing"/>
 
-            <Button
-                android:layout_width="@dimen/dimen_0"
-                android:layout_height="@dimen/dimen_main_btn"
-                android:layout_weight="1"
-                android:text="@string/dial_112"
-                android:theme="@style/NormalButton"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_weight="1"
+                    android:text="@string/camera"
+                    android:theme="@style/NormalButton"/>
+
+                <View
+                    android:layout_width="@dimen/dimen_small_spacing"
+                    android:layout_height="@dimen/dimen_main_btn" />
+
+                <Button
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_weight="1"
+                    android:text="@string/dial_112"
+                    android:theme="@style/NormalButton"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_weight="1"
+                    android:text="@string/single_test"
+                    android:theme="@style/NormalButton"/>
+
+                <View
+                    android:layout_width="@dimen/dimen_small_spacing"
+                    android:layout_height="@dimen/dimen_main_btn" />
+
+                <Button
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_weight="1"
+                    android:text="@string/test_report"
+                    android:theme="@style/NormalButton"/>
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="@dimen/dimen_0"
-                android:layout_height="@dimen/dimen_main_btn"
-                android:layout_weight="1"
-                android:text="@string/single_test"
-                android:theme="@style/NormalButton"/>
-
-            <View
-                android:layout_width="@dimen/dimen_small_spacing"
-                android:layout_height="@dimen/dimen_main_btn" />
-
-            <Button
-                android:layout_width="@dimen/dimen_0"
-                android:layout_height="@dimen/dimen_main_btn"
-                android:layout_weight="1"
-                android:text="@string/test_report"
-                android:theme="@style/NormalButton"/>
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>
