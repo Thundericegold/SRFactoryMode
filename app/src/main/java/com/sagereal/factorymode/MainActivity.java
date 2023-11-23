@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sagereal.factorymode.activities.BaseActivity;
 import com.sagereal.factorymode.activities.SingleTestActivity;
 import com.sagereal.factorymode.activities.TestReportActivity;
 
@@ -29,37 +30,38 @@ import java.io.File;
 import java.io.FileReader;
 import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     double batteryCapacity;
     private final String phone = "tel:112";
     private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
 
+    TextView deviceNameTextView;
+    TextView deviceTypeTextView;
+    TextView versionNumberTextView;
+    TextView androidVersionTextView;
+    TextView batterySizeTextView;
+    TextView ramTextView;
+    TextView romTextView;
+    TextView screenSizeTextView;
+    TextView screenResolutionTextView;
+
+    Button cameraButton;
+    Button dialButton;
+    Button singleTestButton;
+    Button testReportButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        initListener();
 
         String deviceName = Build.DEVICE;
         String deviceType = Build.MODEL;
         String androidVersion = Build.VERSION.RELEASE;
         String versionNumber = Build.DISPLAY;
-
-
-        TextView deviceNameTextView = findViewById(R.id.device_name);
-        TextView deviceTypeTextView = findViewById(R.id.device_type);
-        TextView versionNumberTextView = findViewById(R.id.version_number);
-        TextView androidVersionTextView = findViewById(R.id.android_version);
-        TextView batterySizeTextView = findViewById(R.id.battery_size);
-        TextView ramTextView = findViewById(R.id.ram);
-        TextView romTextView = findViewById(R.id.rom);
-        TextView screenSizeTextView = findViewById(R.id.screen_size);
-        TextView screenResolutionTextView = findViewById(R.id.screen_resolution);
-
-        Button cameraButton = findViewById(R.id.camera);
-        Button dialButton = findViewById(R.id.dial);
-        Button singleTestButton = findViewById(R.id.single_test);
-        Button testReportButton = findViewById(R.id.test_report);
 
         deviceNameTextView.setText(deviceName);
         deviceTypeTextView.setText(deviceType);
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         double screenSize = getScreenSize(MainActivity.this);
         screenSizeTextView.setText( decimalFormat.format(screenSize)+getString(R.string.inches));
 
-
         String screenResolution;
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -89,38 +90,55 @@ public class MainActivity extends AppCompatActivity {
             screenResolution = width + "X" + height;
         }
         screenResolutionTextView.setText(screenResolution);
+    }
 
+    @Override
+    public void initView() {
+        deviceNameTextView = findViewById(R.id.device_name);
+        deviceTypeTextView = findViewById(R.id.device_type);
+        versionNumberTextView = findViewById(R.id.version_number);
+        androidVersionTextView = findViewById(R.id.android_version);
+        batterySizeTextView = findViewById(R.id.battery_size);
+        ramTextView = findViewById(R.id.ram);
+        romTextView = findViewById(R.id.rom);
+        screenSizeTextView = findViewById(R.id.screen_size);
+        screenResolutionTextView = findViewById(R.id.screen_resolution);
 
+        cameraButton = findViewById(R.id.camera);
+        dialButton = findViewById(R.id.dial);
+        singleTestButton = findViewById(R.id.single_test);
+        testReportButton = findViewById(R.id.test_report);
+    }
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.camera:
-                        System.out.println("asd");
-                        break;
-                    case R.id.dial:
-                        callPhoneUI();
-                        break;
-                    case R.id.single_test:
-                        Intent intent1 = new Intent(MainActivity.this, SingleTestActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.test_report:
-                        Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
-                        startActivity(intent2);
-                        break;
-                }
-
-            }
-        };
-
+    @Override
+    public void initListener() {
         cameraButton.setOnClickListener(onClickListener);
         dialButton.setOnClickListener(onClickListener);
         singleTestButton.setOnClickListener(onClickListener);
         testReportButton.setOnClickListener(onClickListener);
-
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.camera:
+                    System.out.println("asd");
+                    break;
+                case R.id.dial:
+                    callPhoneUI();
+                    break;
+                case R.id.single_test:
+                    Intent intent1 = new Intent(MainActivity.this, SingleTestActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.test_report:
+                    Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
+                    startActivity(intent2);
+                    break;
+            }
+        }
+    };
 
     // 判断是否有拨号权限
     private boolean ifHaveCallPhonePermission() {

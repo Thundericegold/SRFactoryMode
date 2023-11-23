@@ -2,22 +2,22 @@
     <!--region Main Page-->
     <string name="sr_factory_mode">SRFactoryMode</string>
     <string name="basic_information">Basic Information</string>
-    <string name="device_name">Device Name:</string>
-    <string name="device_type">Device Type:</string>
-    <string name="version_number">Version Number:</string>
-    <string name="android_version">Android Version:</string>
+    <string name="device_name">Device name:</string>
+    <string name="device_model">Device model:</string>
+    <string name="version_number">Version No:</string>
+    <string name="android_version">Android version:</string>
     <string name="ram">RAM:</string>
     <string name="rom">ROM:</string>
-    <string name="battery_size">Battery Size:</string>
-    <string name="mah">mAh</string>
-    <string name="screen_size">Screen Size:</string>
-    <string name="inches">Inches</string>
+    <string name="battery_size">Battery size:</string>
+    <string name="mah">MA</string>
+    <string name="screen_size">Screen size:</string>
+    <string name="inches">IN</string>
     <string name="screen_resolution">Screen Resolution:</string>
     <string name="pixels">Pixels</string>
-    <string name="camera">Camera</string>
-    <string name="dial_112">Dial 112</string>
-    <string name="single_test">Single Test</string>
-    <string name="test_report">Test Report</string>
+    <string name="take_photos">TAKE PHOTOS</string>
+    <string name="call_112">CALL 112</string>
+    <string name="single_test">SINGLE TEST</string>
+    <string name="test_report">TEST REPORT</string>
     <!--endregion-->
 
 
@@ -36,69 +36,80 @@
     <!--region Single Test-->
     <string name="battery_test">Battery Test</string>
     <string name="vibration_test">Vibration Test</string>
-    <string name="microphone_test">Microphone Test</string>
-    <string name="headphone_test">Headphone Test</string>
+    <string name="mike_test">Mike Test</string>
+    <string name="headset_test">Headset Test</string>
     <string name="lcd_test">LCD Test</string>
     <string name="speaker_test">Speaker Test</string>
     <string name="receiver_test">Receiver Test</string>
     <string name="camera_test">Camera Test</string>
-    <string name="flashlight_test">Flashlight Test</string>
-    <string name="button_test">Button Test</string>
+    <string name="flash_test">Flash Test</string>
+    <string name="key_test">Key Test</string>
     <!--endregion-->
 
     <!--region Battery Test-->
     <string name="charging_status">Charging status:</string>
-    <string name="battery_level">Current battery level:</string>
+    <string name="charging">Charging</string>
+    <string name="uncharged">Not charged</string>
+    <string name="current_electricity">Current electricity:</string>
+    <string name="current_electricity_test">100%</string>
     <string name="battery_voltage">Battery voltage:</string>
+    <string name="battery_voltage_test">4421mV</string>
     <string name="battery_temperature">Battery temperature:</string>
+    <string name="battery_temperature_test">25.0</string>
+    <string name="centigrade">℃</string>
     <!--endregion-->
 
     <!--region Vibration Test-->
-    <string name="vibration_test_tip">Vibration test in progress, please observe for normalcy...</string>
+    <string name="vibration_test_tip">During the vibration test,please observe whether it is normal</string>
     <!--endregion-->
 
-    <!--region Microphone and Headphone Test-->
-    <string name="microphone_test_tip_1">Start recording first, the recording will automatically play after 5 seconds...</string>
-    <string name="microphone_test_tip_2">Recording, please speak...</string>
-    <string name="microphone_test_tip_3">Recording complete, playing recording...</string>
-    <string name="microphone_test_tip_4">Test complete, recording and playback finished...</string>
-    <string name="microphone_test_btn_1">Recording</string>
+    <!--region Mike and Headset Test-->
+    <string name="microphone_test_tip_1">Click recording first, and recording will play automatically in 5 seconds...</string>
+    <string name="microphone_test_tip_2">Please speak</string>
+    <string name="microphone_test_tip_3">The recording is finished, and the recording is playing</string>
+    <string name="microphone_test_tip_4">Test completed, recording and playback completed</string>
+    <string name="microphone_test_btn_1">RECORDING</string>
     <string name="microphone_test_btn_2">Testing in progress</string>
-    <string name="microphone_test_btn_3">Retest</string>
-    <string name="headphone_test_tip_1">First insert headphones, then start recording, the recording will automatically play after 5 seconds...</string>
-    <string name="headphone_test_tip_2">Please insert headphones first</string>
-    <string name="headphone_test_toast_1">Headphones inserted</string>
-    <string name="headphone_test_toast_2">Headphones removed</string>
+    <string name="microphone_test_btn_3">RETEST</string>
+    <string name="headphone_test_tip_1">Insert the headset first, and then click recording. The recording will play automatically in 5 seconds</string>
+    <string name="headphone_test_tip_2">Please insert the headset first</string>
+    <string name="headphone_test_toast_1">Plug headset</string>
+    <string name="headphone_test_toast_2">Unplug headset</string>
     <!--endregion-->
 
     <!--region LCD Test-->
-    <string name="lCD_test_tip">LCD test in progress, please tap the screen and observe color changes...</string>
+    <string name="lCD_test_tip">In the LCD test, please click the screen to observe the color change</string>
     <!--endregion-->
 
     <!--region Speaker Test-->
-    <string name="speaker_test_tip">Speaker test in progress, please pay attention to whether there is sound from the speaker...</string>
+    <string name="speaker_test_tip">During the speaker test, please pay attention to whether the speaker has sound</string>
     <!--endregion-->
 
     <!--region Receiver Test-->
-    <string name="receiver_test_tip">Receiver test in progress, please pay attention to whether there is sound from the receiver...</string>
+    <string name="receiver_test_tip">In the receiver test, please pay attention to whether there is sound in the receiver</string>
     <!--endregion-->
 
     <!--region Camera Test-->
-    <string name="front_camera">Front camera</string>
-    <string name="rear_camera">Rear camera</string>
+    <string name="camer_aproactive">PROACTIVE</string>
+    <string name="camera_back_shooting">BACK SHOOTING</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
-    <string name="flashlight_test_tip">Flashlight test in progress, please observe for normalcy...</string>
+    <string name="flashlight_test_tip">During the flash test, please observe whether it is normal</string>
     <!--endregion-->
 
     <!--region Button Test-->
-    <string name="volume_up">Volume up</string>
-    <string name="volume_down">Volume down</string>
-    <string name="power_button">Power button</string>
+    <string name="volume_up">VOLUME UP</string>
+    <string name="volume_down">VOLUME DOWN</string>
+    <string name="power_key">POWER KEY</string>
+    <!--endregion-->
+
+    <!--region Test Result-->
+    <string name="pass">PASS</string>
+    <string name="fail">FAIL</string>
     <!--endregion-->
 
     <!--region toast-->
-    <string name="back_toast">Please click the back button again to exit the application</string>
+    <string name="back_toast">Please click the Back button again to exit the application</string>
     <!--endregion-->
 </resources>

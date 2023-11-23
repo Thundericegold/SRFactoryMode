@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="test_array">
+        <item>@string/battery_test</item>
+        <item>@string/vibration_test</item>
+        <item>@string/mike_test</item>
+        <item>@string/headset_test</item>
+        <item>@string/lcd_test</item>
+        <item>@string/speaker_test</item>
+        <item>@string/receiver_test</item>
+        <item>@string/camera_test</item>
+        <item>@string/flash_test</item>
+        <item>@string/key_test</item>
+    </string-array>
+</resources>

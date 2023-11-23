@@ -66,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/device_type"
+                    android:text="@string/device_model"
                     android:theme="@style/NormalText"/>
                 <TextView
                     android:id="@+id/device_type"
@@ -209,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"
                     android:layout_weight="1"
-                    android:text="@string/camera"
+                    android:text="@string/take_photos"
                     android:theme="@style/NormalButton"/>
 
                 <View
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/dimen_main_btn"
                     android:layout_weight="1"
-                    android:text="@string/dial_112"
+                    android:text="@string/call_112"
                     android:theme="@style/NormalButton"/>
             </LinearLayout>
 

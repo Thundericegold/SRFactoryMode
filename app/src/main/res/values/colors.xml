@@ -12,4 +12,8 @@
     <color name="grey_title">#7F7F7F</color>
     <color name="grey_btn">#D6D8D7</color>
     <color name="black_btn_text">#252827</color>
+    <color name="black_test_text">#B1B1B1</color>
+
+    <color name="test_pass">#00FF01</color>
+    <color name="test_fail">#FE0000</color>
 </resources>

@@ -4,7 +4,7 @@
     <string name="sr_factory_mode">萨瑞工厂模式</string>
     <string name="basic_information">基本信息</string>
     <string name="device_name">设备名称:</string>
-    <string name="device_type">设备型号:</string>
+    <string name="device_model">设备型号:</string>
     <string name="version_number">版本号:</string>
     <string name="android_version">Android版本:</string>
     <string name="ram">RAM:</string>
@@ -15,8 +15,8 @@
     <string name="inches">英寸</string>
     <string name="screen_resolution">屏幕分辨率:</string>
     <string name="pixels">像素</string>
-    <string name="camera">拍照</string>
-    <string name="dial_112">拨打112</string>
+    <string name="take_photos">拍照</string>
+    <string name="call_112">拨打112</string>
     <string name="single_test">单项测试</string>
     <string name="test_report">测试报告</string>
     <!--endregion-->
@@ -36,21 +36,27 @@
     <!--region Single Test-->
     <string name="battery_test">电池测试</string>
     <string name="vibration_test">振动测试</string>
-    <string name="microphone_test">麦克测试</string>
-    <string name="headphone_test">耳机测试</string>
+    <string name="mike_test">麦克测试</string>
+    <string name="headset_test">耳机测试</string>
     <string name="lcd_test">LCD测试</string>
     <string name="speaker_test">喇叭测试</string>
     <string name="receiver_test">听筒测试</string>
     <string name="camera_test">相机测试</string>
-    <string name="flashlight_test">闪光灯测试</string>
-    <string name="button_test">按键测试</string>
+    <string name="flash_test">闪光灯测试</string>
+    <string name="key_test">按键测试</string>
     <!--endregion-->
 
     <!--region Battery Test-->
     <string name="charging_status">充电状态:</string>
-    <string name="battery_level">当前电量:</string>
+    <string name="charging">充电中</string>
+    <string name="uncharged">未充电</string>
+    <string name="current_electricity">当前电量:</string>
+    <string name="current_electricity_test">100%</string>
     <string name="battery_voltage">电池电压:</string>
+    <string name="battery_voltage_test">4421mV</string>
     <string name="battery_temperature">电池温度:</string>
+    <string name="battery_temperature_test">25.0</string>
+    <string name="centigrade">度</string>
     <!--endregion-->
 
     <!--region Vibration Test-->
@@ -84,8 +90,8 @@
     <!--endregion-->
 
     <!--region Camera Test-->
-    <string name="front_camera">前摄</string>
-    <string name="rear_camera">后摄</string>
+    <string name="camer_aproactive">前摄</string>
+    <string name="camera_back_shooting">后摄</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
@@ -95,7 +101,12 @@
     <!--region Button Test-->
     <string name="volume_up">音量上</string>
     <string name="volume_down">音量下</string>
-    <string name="power_button">电源键</string>
+    <string name="power_key">电源键</string>
+    <!--endregion-->
+
+    <!--region Test Result-->
+    <string name="pass">PASS</string>
+    <string name="fail">FAIL</string>
     <!--endregion-->
 
     <!--region toast-->
