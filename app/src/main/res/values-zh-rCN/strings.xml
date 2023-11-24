@@ -63,18 +63,18 @@
     <string name="vibration_test_tip">振动测试中，请观察是否正常...</string>
     <!--endregion-->
 
-    <!--region Microphone and Headphone Test-->
-    <string name="microphone_test_tip_1">先点击录音，5秒后将会自动播放录音...</string>
-    <string name="microphone_test_tip_2">录音中，请说话...</string>
-    <string name="microphone_test_tip_3">录音完成，播放录音中...</string>
-    <string name="microphone_test_tip_4">测试完成，已完成录音和播放...</string>
-    <string name="microphone_test_btn_1">录音</string>
-    <string name="microphone_test_btn_2">测试中</string>
-    <string name="microphone_test_btn_3">重测</string>
-    <string name="headphone_test_tip_1">先插入耳机，然后点击录音，5秒后将会自动播放录音...</string>
-    <string name="headphone_test_tip_2">请先插入耳机</string>
-    <string name="headphone_test_toast_1">耳机插入</string>
-    <string name="headphone_test_toast_2">耳机拔出</string>
+    <!--region Mike and Headset Test-->
+    <string name="mike_test_tip_1">先点击录音，5秒后将会自动播放录音...</string>
+    <string name="mike_test_tip_2">录音中，请说话...</string>
+    <string name="mike_test_tip_3">录音完成，播放录音中...</string>
+    <string name="mike_test_tip_4">测试完成，已完成录音和播放...</string>
+    <string name="mike_test_btn_1">录音</string>
+    <string name="mike_test_btn_2">测试中</string>
+    <string name="mike_test_btn_3">重测</string>
+    <string name="headset_test_tip_1">先插入耳机，然后点击录音，5秒后将会自动播放录音...</string>
+    <string name="headset_test_tip_2">请先插入耳机</string>
+    <string name="headset_test_toast_1">耳机插入</string>
+    <string name="headset_test_toast_2">耳机拔出</string>
     <!--endregion-->
 
     <!--region LCD Test-->
@@ -109,7 +109,12 @@
     <string name="fail">FAIL</string>
     <!--endregion-->
 
-    <!--region toast-->
+    <!--region Toast-->
     <string name="back_toast">请再次点击返回键退出应用</string>
+    <!--endregion-->
+
+    <!--region Permission Toast-->
+    <string name="permission_mike">请添加录音权限后重试</string>
+    <string name="permission_call">请添加拨号权限后重试</string>
     <!--endregion-->
 </resources>

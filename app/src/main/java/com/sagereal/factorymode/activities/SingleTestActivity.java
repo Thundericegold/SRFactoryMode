@@ -182,7 +182,67 @@ public class SingleTestActivity extends BaseActivity {
                 }
                 break;
             case REQUEST_VIBRATION:
-                Toast.makeText(this, "振动", Toast.LENGTH_SHORT).show();
+                if(vibrationStatus != sharedPreferences.getInt(STATUS_VIBRATION,-1)){
+                    vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION,-1);
+                    statusList.put(1,vibrationStatus);
+                    adapter.notifyItemChanged(1);
+                }
+                break;
+            case REQUEST_MIKE:
+                if(mikeStatus != sharedPreferences.getInt(STATUS_MIKE,-1)){
+                    mikeStatus = sharedPreferences.getInt(STATUS_MIKE,-1);
+                    statusList.put(2,mikeStatus);
+                    adapter.notifyItemChanged(2);
+                }
+                break;
+            case REQUEST_HEADSET:
+                if(headsetStatus != sharedPreferences.getInt(STATUS_HEADSET,-1)){
+                    headsetStatus = sharedPreferences.getInt(STATUS_HEADSET,-1);
+                    statusList.put(3,headsetStatus);
+                    adapter.notifyItemChanged(3);
+                }
+                break;
+            case REQUEST_LCD:
+                if(lcdStatus != sharedPreferences.getInt(STATUS_LCD,-1)){
+                    lcdStatus = sharedPreferences.getInt(STATUS_LCD,-1);
+                    statusList.put(4,lcdStatus);
+                    adapter.notifyItemChanged(4);
+                }
+                break;
+            case REQUEST_SPEAKER:
+                if(speakerStatus != sharedPreferences.getInt(STATUS_SPEAKER,-1)){
+                    speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER,-1);
+                    statusList.put(5,speakerStatus);
+                    adapter.notifyItemChanged(5);
+                }
+                break;
+            case REQUEST_RECEIVER:
+                if(receiverStatus != sharedPreferences.getInt(STATUS_RECEIVER,-1)){
+                    receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER,-1);
+                    statusList.put(6,receiverStatus);
+                    adapter.notifyItemChanged(6);
+                }
+                break;
+            case REQUEST_CAMERA:
+                if(cameraStatus != sharedPreferences.getInt(STATUS_CAMERA,-1)){
+                    cameraStatus = sharedPreferences.getInt(STATUS_CAMERA,-1);
+                    statusList.put(7,cameraStatus);
+                    adapter.notifyItemChanged(7);
+                }
+                break;
+            case REQUEST_FLASH:
+                if(flashStatus != sharedPreferences.getInt(STATUS_FLASH,-1)){
+                    flashStatus = sharedPreferences.getInt(STATUS_FLASH,-1);
+                    statusList.put(8,flashStatus);
+                    adapter.notifyItemChanged(8);
+                }
+                break;
+            case REQUEST_KEY:
+                if(keyStatus != sharedPreferences.getInt(STATUS_KEY,-1)){
+                    keyStatus = sharedPreferences.getInt(STATUS_KEY,-1);
+                    statusList.put(9,keyStatus);
+                    adapter.notifyItemChanged(9);
+                }
                 break;
         }
     }

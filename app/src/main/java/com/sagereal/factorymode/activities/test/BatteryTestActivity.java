@@ -1,5 +1,6 @@
 package com.sagereal.factorymode.activities.test;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,6 +17,41 @@ public class BatteryTestActivity extends BaseTestActivity {
     TextView batteryVoltageTextView;
     TextView batteryTemperatureTextView;
 
+    private BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+
+            boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                status == BatteryManager.BATTERY_STATUS_FULL;
+
+            if (isCharging){
+                chargingStatusTextView.setText(getString(R.string.charging));
+            }else {
+                chargingStatusTextView.setText(getString(R.string.uncharged));
+            }
+
+            // 获取当前电量
+            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+            int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+            float batteryPct = level / (float)scale;
+            float p = batteryPct * 100;
+
+            currentElectricityTextView.setText(Math.round(p)+"%");
+
+            // 获取电池电压
+            int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+
+            batteryVoltageTextView.setText(voltage+"mV");
+
+            // 获取电池温度
+            float temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)/10;
+
+            batteryTemperatureTextView.setText(String.valueOf(temperature)+getString(R.string.centigrade));
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,35 +61,7 @@ public class BatteryTestActivity extends BaseTestActivity {
 
         // 获取充电状态
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = registerReceiver(null, ifilter);
-        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                status == BatteryManager.BATTERY_STATUS_FULL;
-
-        if (isCharging){
-            chargingStatusTextView.setText(getString(R.string.charging));
-        }else {
-            chargingStatusTextView.setText(getString(R.string.uncharged));
-        }
-
-
-
-        // 获取当前电量
-        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        float batteryPct = level / (float)scale;
-
-        currentElectricityTextView.setText(String.valueOf(batteryPct));
-
-        // 获取电池电压
-        int voltage = batteryStatus.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-
-        batteryVoltageTextView.setText(String.valueOf(voltage));
-
-        // 获取电池温度
-        int temperature = batteryStatus.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
-
-        batteryTemperatureTextView.setText(String.valueOf(temperature));
+        registerReceiver(batteryReceiver, ifilter);
     }
 
     @Override
@@ -72,23 +80,20 @@ public class BatteryTestActivity extends BaseTestActivity {
         failButton.setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pass:
-                    editor.putInt("battery_status",0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    editor.putInt("battery_status",1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
-            }
+    View.OnClickListener onClickListener = v -> {
+        switch (v.getId()) {
+            case R.id.pass:
+                editor.putInt(STATUS_BATTERY,0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+                break;
+            case R.id.fail:
+                editor.putInt(STATUS_BATTERY,1);
+                editor.commit();
+                setResult(RESULT_FAIL);
+                finish();
+                break;
         }
     };
 }
