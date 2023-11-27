@@ -107,6 +107,7 @@
     <!--region Test Result-->
     <string name="pass">PASS</string>
     <string name="fail">FAIL</string>
+    <string name="untested">未测</string>
     <!--endregion-->
 
     <!--region Toast-->

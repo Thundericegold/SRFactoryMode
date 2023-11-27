@@ -16,4 +16,6 @@
     <dimen name="dimen_0">0dp</dimen>
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_main_btn">56dp</dimen>
+
+    <dimen name="dimen_report_height">50dp</dimen>
 </resources>
