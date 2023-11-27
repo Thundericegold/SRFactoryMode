@@ -72,9 +72,10 @@
     <string name="mike_test_btn_2">Testing in progress</string>
     <string name="mike_test_btn_3">RETEST</string>
     <string name="headset_test_tip_1">Insert the headset first, and then click recording. The recording will play automatically in 5 seconds</string>
-    <string name="headset_test_tip_2">Please insert the headset first</string>
+
     <string name="headset_test_toast_1">Plug headset</string>
     <string name="headset_test_toast_2">Unplug headset</string>
+    <string name="headset_test_toast_3">Please insert the headset first</string>
     <!--endregion-->
 
     <!--region LCD Test-->

@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:paddingEnd="@dimen/dimen_small_spacing"
+        android:paddingTop="@dimen/dimen_small_spacing"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"

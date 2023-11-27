@@ -72,9 +72,9 @@
     <string name="mike_test_btn_2">测试中</string>
     <string name="mike_test_btn_3">重测</string>
     <string name="headset_test_tip_1">先插入耳机，然后点击录音，5秒后将会自动播放录音...</string>
-    <string name="headset_test_tip_2">请先插入耳机</string>
     <string name="headset_test_toast_1">耳机插入</string>
     <string name="headset_test_toast_2">耳机拔出</string>
+    <string name="headset_test_toast_3">请先插入耳机...</string>
     <!--endregion-->
 
     <!--region LCD Test-->

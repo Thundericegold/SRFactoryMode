@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +26,7 @@
         tools:targetApi="31">
         <activity
             android:name=".activities.test.BatteryTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -31,6 +34,7 @@
         </activity>
         <activity
             android:name=".activities.BaseActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -38,6 +42,7 @@
         </activity>
         <activity
             android:name=".activities.test.KeyTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -45,6 +50,7 @@
         </activity>
         <activity
             android:name=".activities.test.FlashTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -52,6 +58,7 @@
         </activity>
         <activity
             android:name=".activities.test.CameraTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -59,6 +66,7 @@
         </activity>
         <activity
             android:name=".activities.test.ReceiverTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -66,6 +74,7 @@
         </activity>
         <activity
             android:name=".activities.test.SpeakerTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -73,6 +82,7 @@
         </activity>
         <activity
             android:name=".activities.test.LcdTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -80,6 +90,7 @@
         </activity>
         <activity
             android:name=".activities.test.HeadsetTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -87,6 +98,7 @@
         </activity>
         <activity
             android:name=".activities.test.MikeTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -94,6 +106,7 @@
         </activity>
         <activity
             android:name=".activities.test.VibrationTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -101,6 +114,7 @@
         </activity>
         <activity
             android:name=".activities.TestReportActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -108,6 +122,7 @@
         </activity>
         <activity
             android:name=".activities.SingleTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -115,6 +130,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

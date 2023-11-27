@@ -1,8 +1,11 @@
 package com.sagereal.factorymode.activities.test;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +21,16 @@ import androidx.core.app.ActivityCompat;
 import com.sagereal.factorymode.R;
 import com.sagereal.factorymode.utils.AudioRecorderUtil;
 
+import java.io.IOException;
+
 public class MikeTestActivity extends BaseTestActivity {
 
     TextView tipsTextView;
     Button testButton;
     Button testingButton;
     Button retestButton;
+    MediaPlayer mediaPlayer;
+    AudioManager audioManager;
     AudioRecorderUtil audioRecorderUtil;
     private final int RECORD_AUDIO_REQUEST_CODE = 10001;
 
@@ -50,12 +57,23 @@ public class MikeTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.pass:
+                    if (mediaPlayer!=null){
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                        audioManager.setMode(AudioManager.MODE_NORMAL);
+                    }
                     editor.putInt(STATUS_MIKE, 0);
                     editor.commit();
                     setResult(RESULT_PASS);
                     finish();
                     break;
                 case R.id.fail:
+                    if (mediaPlayer!=null){
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                        audioManager.setMode(AudioManager.MODE_NORMAL);
+                    }
+
                     editor.putInt(STATUS_MIKE, 1);
                     editor.commit();
                     setResult(RESULT_FAIL);
@@ -75,6 +93,7 @@ public class MikeTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_mike_test);
         initView();
         initListener();
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
     // 判断是否有录音权限
@@ -116,11 +135,22 @@ public class MikeTestActivity extends BaseTestActivity {
                 // 执行某个任务
                 audioRecorderUtil.stopRecording();
                 tipsTextView.setText(R.string.mike_test_tip_3);
-                MediaPlayer mediaPlayer = MediaPlayer.create(MikeTestActivity.this, Uri.parse(outputPath));
-                mediaPlayer.start();
+                try {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(MikeTestActivity.this, Uri.parse(outputPath));
+                    audioManager.setMode(AudioManager.MODE_IN_CALL);
+                    audioManager.setSpeakerphoneOn(true);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Handler handler2 = new Handler();
                 Runnable task2 = () -> {
                     mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
                     tipsTextView.setText(R.string.mike_test_tip_4);
                     testingButton.setVisibility(View.GONE);
                     retestButton.setVisibility(View.VISIBLE);
