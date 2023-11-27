@@ -32,6 +32,7 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends BaseActivity {
 
+    private long lastBackDownTime;
     double batteryCapacity;
     private final String phone = "tel:112";
     private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
@@ -139,6 +140,17 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        long currentBackDownTime = System.currentTimeMillis();
+        if (currentBackDownTime - lastBackDownTime < 1000){
+            super.onBackPressed();
+        }else {
+            Toast.makeText(this, getString(R.string.back_toast), Toast.LENGTH_SHORT).show();
+            lastBackDownTime = currentBackDownTime;
+        }
+    }
 
     // 判断是否有拨号权限
     private boolean ifHaveCallPhonePermission() {

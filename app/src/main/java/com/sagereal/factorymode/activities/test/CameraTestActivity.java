@@ -2,11 +2,18 @@ package com.sagereal.factorymode.activities.test;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sagereal.factorymode.R;
 
-public class CameraTestActivity extends AppCompatActivity {
+public class CameraTestActivity extends BaseTestActivity {
+
+    @Override
+    public void initView() {
+    }
+
+    @Override
+    public void initListener() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
