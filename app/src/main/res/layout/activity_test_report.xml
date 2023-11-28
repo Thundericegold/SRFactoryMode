@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/pass"
+            android:text="@string/untested"
             android:gravity="center"
             android:theme="@style/NormalText"/>
     </LinearLayout>

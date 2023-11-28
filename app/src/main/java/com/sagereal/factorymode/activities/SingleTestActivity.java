@@ -1,11 +1,9 @@
 package com.sagereal.factorymode.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,11 +21,9 @@ import com.sagereal.factorymode.activities.test.MikeTestActivity;
 import com.sagereal.factorymode.activities.test.ReceiverTestActivity;
 import com.sagereal.factorymode.activities.test.SpeakerTestActivity;
 import com.sagereal.factorymode.activities.test.VibrationTestActivity;
-import com.sagereal.factorymode.adapter.MyAdapter;
+import com.sagereal.factorymode.adapter.TestAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SingleTestActivity extends BaseActivity {
@@ -45,7 +41,7 @@ public class SingleTestActivity extends BaseActivity {
 
     ImageButton backButton;
     RecyclerView recyclerView;
-    MyAdapter adapter;
+    TestAdapter adapter;
 
     int batteryStatus,vibrationStatus,mikeStatus,headsetStatus,lcdStatus,
     speakerStatus,receiverStatus,cameraStatus,flashStatus,keyStatus;
@@ -70,7 +66,7 @@ public class SingleTestActivity extends BaseActivity {
         DividerItemDecoration divider = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerView.addItemDecoration(divider);
         //设置适配器
-        adapter = new MyAdapter(this, testArrays, statusList,itemClickListener);
+        adapter = new TestAdapter(this, testArrays, statusList,itemClickListener);
         recyclerView.setAdapter(adapter);
     }
 
@@ -119,7 +115,7 @@ public class SingleTestActivity extends BaseActivity {
         }
     };
 
-    MyAdapter.ClickListener itemClickListener = new MyAdapter.ClickListener() {
+    TestAdapter.ClickListener itemClickListener = new TestAdapter.ClickListener() {
         @Override
         public void onClick(int position) {
             Intent intent = null;

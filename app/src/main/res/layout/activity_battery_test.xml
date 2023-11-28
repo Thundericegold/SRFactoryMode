@@ -23,7 +23,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_test_text_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_test_text_height"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:orientation="horizontal">
         <TextView
@@ -41,7 +42,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_test_text_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_test_text_height"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:orientation="horizontal">
         <TextView
@@ -59,7 +61,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_test_text_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_test_text_height"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:orientation="horizontal">
         <TextView
@@ -77,7 +80,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_test_text_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_test_text_height"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:orientation="horizontal">
         <TextView

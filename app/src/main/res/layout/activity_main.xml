@@ -202,25 +202,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dimen_main_btn"
                 android:orientation="horizontal">
                 <Button
                     android:id="@+id/camera"
                     android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/take_photos"
                     android:theme="@style/NormalButton"/>
 
                 <View
                     android:layout_width="@dimen/dimen_small_spacing"
-                    android:layout_height="@dimen/dimen_main_btn" />
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/dial"
                     android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/call_112"
                     android:theme="@style/NormalButton"/>
@@ -229,25 +228,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dimen_main_btn"
                 android:orientation="horizontal">
                 <Button
                     android:id="@+id/single_test"
                     android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/single_test"
                     android:theme="@style/NormalButton"/>
 
                 <View
                     android:layout_width="@dimen/dimen_small_spacing"
-                    android:layout_height="@dimen/dimen_main_btn" />
+                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/test_report"
                     android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dimen_main_btn"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/test_report"
                     android:theme="@style/NormalButton"/>
