@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -124,7 +125,10 @@ public class MainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.camera:
-                    System.out.println("asd");
+                    Intent mIntent = new Intent();
+                    mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                    mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                    startActivity(mIntent);
                     break;
                 case R.id.dial:
                     callPhoneUI();
