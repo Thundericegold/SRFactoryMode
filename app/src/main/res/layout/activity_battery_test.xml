@@ -102,6 +102,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="bottom"
+        android:paddingLeft="@dimen/dimen_small_spacing"
+        android:paddingRight="@dimen/dimen_small_spacing"
         android:paddingBottom="@dimen/dimen_middle_spacing">
         <Button
             android:id="@+id/pass"
