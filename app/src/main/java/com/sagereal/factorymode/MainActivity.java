@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
     double batteryCapacity;
     private final String phone = "tel:112";
     private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
+    private final int CAMERA_REQUEST_CODE = 10002;//相机请求码
 
     TextView deviceNameTextView;
     TextView deviceTypeTextView;
@@ -125,10 +126,7 @@ public class MainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.camera:
-                    Intent mIntent = new Intent();
-                    mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                    startActivity(mIntent);
+                    openCamera();
                     break;
                 case R.id.dial:
                     callPhoneUI();
@@ -166,6 +164,16 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+    // 判断是否有相机权限
+    private boolean ifHaveCameraPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // 动态申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
     // 申请权限回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -177,6 +185,12 @@ public class MainActivity extends BaseActivity {
 //                callPhone();
 //                callUI();
                 callPhoneUI();
+            }
+        }else if (requestCode == CAMERA_REQUEST_CODE) {
+            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "请添加相机权限后重试", Toast.LENGTH_SHORT).show();
+            } else {
+                openCamera();
             }
         }
     }
@@ -200,6 +214,15 @@ public class MainActivity extends BaseActivity {
     private void callPhoneUI() {
         if (ifHaveCallPhonePermission()) {
             startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phone)));
+        }
+    }
+
+    private void openCamera() {
+        if (ifHaveCameraPermission()) {
+            Intent mIntent = new Intent();
+            mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+            mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+            startActivity(mIntent);
         }
     }
 
