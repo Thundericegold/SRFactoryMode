@@ -17,7 +17,7 @@ public class FlashTestActivity extends BaseTestActivity {
     Button toggleButton;
     private CameraManager mCameraManager;
     private String mCameraId;
-    private Boolean isTorchOn = false;
+    private Boolean isTorchOn = true;
 
 
     @Override

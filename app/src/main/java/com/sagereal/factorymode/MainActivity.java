@@ -75,11 +75,11 @@ public class MainActivity extends BaseActivity {
             WindowMetrics currentWindowMetrics = wm.getCurrentWindowMetrics();
             int width = currentWindowMetrics.getBounds().width();
             int height = currentWindowMetrics.getBounds().height();
-            screenResolution = width + "X" + height;
+            screenResolution = width + "x" + height + getString(R.string.pixels);
         }else {
             int width = wm.getDefaultDisplay().getWidth();
             int height = wm.getDefaultDisplay().getHeight();
-            screenResolution = width + "X" + height;
+            screenResolution = width + "x" + height + getString(R.string.pixels);
         }
         screenResolutionTextView.setText(screenResolution);
     }
@@ -235,7 +235,7 @@ public class MainActivity extends BaseActivity {
             totalRam = (int)Math.ceil((Float.valueOf(Float.parseFloat(ramMemorySize) / (1024 * 1024)).doubleValue()));
         }
 
-        return totalRam + "GB";
+        return totalRam + "G";
     }
 
     /**
@@ -250,7 +250,7 @@ public class MainActivity extends BaseActivity {
         long size = totalBlocks * blockSize;
         long GB = 1024 * 1024 * 1024;
         final long[] deviceRomMemoryMap = {2*GB, 4*GB, 8*GB, 16*GB, 32*GB, 64*GB, 128*GB, 256*GB, 512*GB, 1024*GB, 2048*GB};
-        String[] displayRomSize = {"2GB","4GB","8GB","16GB","32GB","64GB","128GB","256GB","512GB","1024GB","2048GB"};
+        String[] displayRomSize = {"2G","4G","8G","16G","32G","64G","128G","256G","512G","1024G","2048G"};
         int i;
         for(i = 0 ; i < deviceRomMemoryMap.length; i++) {
             if(size <= deviceRomMemoryMap[i]) {
