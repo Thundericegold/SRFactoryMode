@@ -39,20 +39,9 @@ public class MainActivity extends BaseActivity {
     private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
     private final int CAMERA_REQUEST_CODE = 10002;//相机请求码
 
-    TextView deviceNameTextView;
-    TextView deviceTypeTextView;
-    TextView versionNumberTextView;
-    TextView androidVersionTextView;
-    TextView batterySizeTextView;
-    TextView ramTextView;
-    TextView romTextView;
-    TextView screenSizeTextView;
-    TextView screenResolutionTextView;
-
-    Button cameraButton;
-    Button dialButton;
-    Button singleTestButton;
-    Button testReportButton;
+    TextView deviceNameTextView,deviceTypeTextView,versionNumberTextView,androidVersionTextView,
+            batterySizeTextView,ramTextView,romTextView,screenSizeTextView,screenResolutionTextView;
+    Button cameraButton,dialButton,singleTestButton,testReportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

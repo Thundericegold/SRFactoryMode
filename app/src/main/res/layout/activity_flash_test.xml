@@ -26,13 +26,20 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:paddingEnd="@dimen/dimen_small_spacing"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/dimen_test_text_height"
             android:text="@string/flashlight_test_tip"
             android:theme="@style/testText"/>
+        <Button
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/NormalButton"
+            android:text="@string/flashlight_turn_off"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -43,7 +43,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public class CameraTestActivity extends BaseTestActivity {
 
@@ -127,44 +126,28 @@ public class CameraTestActivity extends BaseTestActivity {
             mCameraId = "1";
             closeCamera();
             reopenCamera();
+            toggleButton.setText(R.string.camera_back_shooting);
         } else if (mCameraId.equals("1")) {
             mCameraId = "0";
             closeCamera();
             reopenCamera();
+            toggleButton.setText(R.string.camera_proactive);
         }
     }
 
-    /**
-     * Closes the current {@link CameraDevice}.
-     */
     private void closeCamera() {
-//        Semaphore mCameraOpenCloseLock = null;
-//        try {
-//            mCameraOpenCloseLock.acquire();
-//            synchronized (mCameraStateLock) {
-//                // Reset state and clean up resources used by the camera.
-//                // Note: After calling this, the ImageReaders will be closed after any background
-//                // tasks saving Images from these readers have been completed.
-//                mPendingUserCaptures = 0;
-//                mState = STATE_CLOSED;
-                if (null != captureSession) {
-                    captureSession.close();
-                    captureSession = null;
-                }
-                if (null != cameraDevice) {
-                    cameraDevice.close();
-                    cameraDevice = null;
-                }
-                if (null != imageReader) {
-                    imageReader.close();
-                    imageReader = null;
-                }
-//            }
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
-//        } finally {
-//            mCameraOpenCloseLock.release();
-//        }
+        if (null != captureSession) {
+            captureSession.close();
+            captureSession = null;
+        }
+        if (null != cameraDevice) {
+            cameraDevice.close();
+            cameraDevice = null;
+        }
+        if (null != imageReader) {
+            imageReader.close();
+            imageReader = null;
+        }
     }
 
     public void reopenCamera() {
@@ -177,18 +160,23 @@ public class CameraTestActivity extends BaseTestActivity {
 
     @Override
     public void initView() {
+        toggleButton = findViewById(R.id.toggle);
         passButton = findViewById(R.id.pass);
         failButton = findViewById(R.id.fail);
     }
 
     @Override
     public void initListener() {
+        toggleButton.setOnClickListener(onClickListener);
         passButton.setOnClickListener(onClickListener);
         failButton.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = v -> {
         switch (v.getId()) {
+            case R.id.toggle:
+                switchCamera();
+                break;
             case R.id.pass:
                 editor.putInt(STATUS_CAMERA, 0);
                 editor.commit();
@@ -215,6 +203,12 @@ public class CameraTestActivity extends BaseTestActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeCamera();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -224,54 +218,6 @@ public class CameraTestActivity extends BaseTestActivity {
             //为TextureView组件设置监听器
             textureView.setSurfaceTextureListener(mSurfaceTextureListener);
             rootLayout.addView(textureView);
-            findViewById(R.id.capture).setOnClickListener(view -> switchCamera());
-//            findViewById(R.id.capture).setOnClickListener(view -> captureStillPicture());
-        }
-    }
-
-    private void captureStillPicture() {
-        try {
-            if (cameraDevice == null) {
-                return;
-            }
-            //创建作为拍照的CaptureRequest.Builder
-            CaptureRequest.Builder captureRequestBuilder =
-                    cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
-            //将imageReader的surface作为CaptureRequest.Builder的目标
-            captureRequestBuilder.addTarget(imageReader.getSurface());
-            //设置自动对焦模式
-            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            //设置自动曝光模式
-            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-            //获取设备方向
-            int rotation = getWindowManager().getDefaultDisplay().getRotation();
-            //根据设备方向计算设置照片的方向
-            captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            //停止连续取景
-            captureSession.stopRepeating();
-            //捕获静态图像
-            captureSession.capture(captureRequestBuilder.build(),
-                    new CameraCaptureSession.CaptureCallback() {
-                        @Override
-                        public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
-                            try {
-                                //重设自动对焦模式
-                                previewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
-                                        CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-                                //设置自动曝光模式
-                                previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                                        CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-                                //打开连续取景模式
-                                captureSession.setRepeatingRequest(previewRequest, null, null);
-                            } catch (CameraAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, null);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
         }
     }
 
@@ -442,6 +388,53 @@ public class CameraTestActivity extends BaseTestActivity {
         public int compare(Size lhs, Size rhs) {
             //强转为long保证不会发生溢出
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() - (long) rhs.getWidth() * rhs.getHeight());
+        }
+    }
+
+    //拍照
+    private void captureStillPicture() {
+        try {
+            if (cameraDevice == null) {
+                return;
+            }
+            //创建作为拍照的CaptureRequest.Builder
+            CaptureRequest.Builder captureRequestBuilder =
+                    cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            //将imageReader的surface作为CaptureRequest.Builder的目标
+            captureRequestBuilder.addTarget(imageReader.getSurface());
+            //设置自动对焦模式
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            //设置自动曝光模式
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+            //获取设备方向
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            //根据设备方向计算设置照片的方向
+            captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+            //停止连续取景
+            captureSession.stopRepeating();
+            //捕获静态图像
+            captureSession.capture(captureRequestBuilder.build(),
+                    new CameraCaptureSession.CaptureCallback() {
+                        @Override
+                        public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
+                            try {
+                                //重设自动对焦模式
+                                previewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
+                                        CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
+                                //设置自动曝光模式
+                                previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                                        CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+                                //打开连续取景模式
+                                captureSession.setRepeatingRequest(previewRequest, null, null);
+                            } catch (CameraAccessException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, null);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 

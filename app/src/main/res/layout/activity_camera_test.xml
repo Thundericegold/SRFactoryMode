@@ -24,19 +24,22 @@
     <FrameLayout
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dimen_0"
         android:layout_weight="1"
+        android:layout_gravity="center"
         android:background="@color/grey">
-        <Button
-            android:id="@+id/capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="前摄"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/dimen_middle_spacing"
-            android:layout_marginEnd="@dimen/dimen_middle_spacing" />
+
     </FrameLayout>
 
+    <Button
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/camera_proactive"
+        android:theme="@style/NormalButton"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/dimen_middle_spacing"
+        android:layout_marginEnd="@dimen/dimen_middle_spacing" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_state_height"

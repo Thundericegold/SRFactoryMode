@@ -90,12 +90,14 @@
     <!--endregion-->
 
     <!--region Camera Test-->
-    <string name="camer_aproactive">前摄</string>
+    <string name="camera_proactive">前摄</string>
     <string name="camera_back_shooting">后摄</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
     <string name="flashlight_test_tip">闪光灯测试中，请观察是否正常...</string>
+    <string name="flashlight_turn_on">开启闪光灯</string>
+    <string name="flashlight_turn_off">关闭闪光灯</string>
     <!--endregion-->
 
     <!--region Button Test-->

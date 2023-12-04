@@ -91,12 +91,14 @@
     <!--endregion-->
 
     <!--region Camera Test-->
-    <string name="camer_aproactive">PROACTIVE</string>
+    <string name="camera_proactive">PROACTIVE</string>
     <string name="camera_back_shooting">BACK SHOOTING</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
     <string name="flashlight_test_tip">During the flash test, please observe whether it is normal</string>
+    <string name="flashlight_turn_on">Turn On</string>
+    <string name="flashlight_turn_off">Turn Off</string>
     <!--endregion-->
 
     <!--region Button Test-->

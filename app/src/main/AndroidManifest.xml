@@ -51,6 +51,7 @@
         <activity
             android:name=".activities.test.FlashTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -59,6 +60,7 @@
         <activity
             android:name=".activities.test.CameraTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
