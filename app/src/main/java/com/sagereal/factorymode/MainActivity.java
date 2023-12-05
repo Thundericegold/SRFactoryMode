@@ -67,7 +67,9 @@ public class MainActivity extends BaseActivity {
         batterySizeTextView.setText(result);
 
         double screenSize = getScreenSize(MainActivity.this);
-        screenSizeTextView.setText( decimalFormat.format(screenSize)+getString(R.string.inches));
+
+        decimalFormat = new DecimalFormat("#.##");
+        screenSizeTextView.setText(String.format("%s%s", decimalFormat.format(screenSize), getString(R.string.inches)));
 
         String screenResolution;
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -171,8 +173,6 @@ public class MainActivity extends BaseActivity {
             if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "请添加拨号权限后重试", Toast.LENGTH_SHORT).show();
             } else {
-//                callPhone();
-//                callUI();
                 callPhoneUI();
             }
         }else if (requestCode == CAMERA_REQUEST_CODE) {
@@ -279,12 +279,17 @@ public class MainActivity extends BaseActivity {
     }
 
     public static double getScreenSize(Context context) {
-        DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        double width = metrics.widthPixels / metrics.xdpi;
-        double height = metrics.heightPixels / metrics.ydpi;
-        double screenSize = Math.sqrt(width * width + height * height);
-        return screenSize;
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getRealMetrics(realDisplayMetrics);
+
+        int widthPixels = realDisplayMetrics.widthPixels;
+        int heightPixels = realDisplayMetrics.heightPixels;
+
+        double x = Math.pow(widthPixels/realDisplayMetrics.xdpi,2);
+        double y = Math.pow(heightPixels/realDisplayMetrics.ydpi,2);
+
+        return Math.sqrt(x+y);
     }
+
 }

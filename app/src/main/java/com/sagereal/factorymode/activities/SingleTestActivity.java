@@ -43,8 +43,8 @@ public class SingleTestActivity extends BaseActivity {
     RecyclerView recyclerView;
     TestAdapter adapter;
 
-    int batteryStatus,vibrationStatus,mikeStatus,headsetStatus,lcdStatus,
-    speakerStatus,receiverStatus,cameraStatus,flashStatus,keyStatus;
+    int batteryStatus, vibrationStatus, mikeStatus, headsetStatus, lcdStatus,
+            speakerStatus, receiverStatus, cameraStatus, flashStatus, keyStatus;
 
     Map<Integer, Integer> statusList = new HashMap<Integer, Integer>();
 
@@ -66,7 +66,7 @@ public class SingleTestActivity extends BaseActivity {
         DividerItemDecoration divider = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerView.addItemDecoration(divider);
         //设置适配器
-        adapter = new TestAdapter(this, testArrays, statusList,itemClickListener);
+        adapter = new TestAdapter(this, testArrays, statusList, itemClickListener);
         recyclerView.setAdapter(adapter);
     }
 
@@ -81,28 +81,28 @@ public class SingleTestActivity extends BaseActivity {
         backButton.setOnClickListener(onClickListener);
     }
 
-    private void initStatus(){
-        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY,-1);
-        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION,-1);
-        mikeStatus = sharedPreferences.getInt(STATUS_MIKE,-1);
-        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET,-1);
-        lcdStatus = sharedPreferences.getInt(STATUS_LCD,-1);
-        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER,-1);
-        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER,-1);
-        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA,-1);
-        flashStatus = sharedPreferences.getInt(STATUS_FLASH,-1);
-        keyStatus = sharedPreferences.getInt(STATUS_KEY,-1);
+    private void initStatus() {
+        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY, -1);
+        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION, -1);
+        mikeStatus = sharedPreferences.getInt(STATUS_MIKE, -1);
+        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET, -1);
+        lcdStatus = sharedPreferences.getInt(STATUS_LCD, -1);
+        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER, -1);
+        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER, -1);
+        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA, -1);
+        flashStatus = sharedPreferences.getInt(STATUS_FLASH, -1);
+        keyStatus = sharedPreferences.getInt(STATUS_KEY, -1);
 
-        statusList.put(0,batteryStatus);
-        statusList.put(1,vibrationStatus);
-        statusList.put(2,mikeStatus);
-        statusList.put(3,headsetStatus);
-        statusList.put(4,lcdStatus);
-        statusList.put(5,speakerStatus);
-        statusList.put(6,receiverStatus);
-        statusList.put(7,cameraStatus);
-        statusList.put(8,flashStatus);
-        statusList.put(9,keyStatus);
+        statusList.put(0, batteryStatus);
+        statusList.put(1, vibrationStatus);
+        statusList.put(2, mikeStatus);
+        statusList.put(3, headsetStatus);
+        statusList.put(4, lcdStatus);
+        statusList.put(5, speakerStatus);
+        statusList.put(6, receiverStatus);
+        statusList.put(7, cameraStatus);
+        statusList.put(8, flashStatus);
+        statusList.put(9, keyStatus);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -169,79 +169,45 @@ public class SingleTestActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int status = sharedPreferences.getInt(STATUS_BATTERY, -1);
         switch (requestCode) {
             case REQUEST_BATTERY:
-                if(batteryStatus != sharedPreferences.getInt(STATUS_BATTERY,-1)){
-                    batteryStatus = sharedPreferences.getInt(STATUS_BATTERY,-1);
-                    statusList.put(0,batteryStatus);
-                    adapter.notifyItemChanged(0);
-                }
+                updateStatus(0, status);
                 break;
             case REQUEST_VIBRATION:
-                if(vibrationStatus != sharedPreferences.getInt(STATUS_VIBRATION,-1)){
-                    vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION,-1);
-                    statusList.put(1,vibrationStatus);
-                    adapter.notifyItemChanged(1);
-                }
+                updateStatus(1, sharedPreferences.getInt(STATUS_VIBRATION, -1));
                 break;
             case REQUEST_MIKE:
-                if(mikeStatus != sharedPreferences.getInt(STATUS_MIKE,-1)){
-                    mikeStatus = sharedPreferences.getInt(STATUS_MIKE,-1);
-                    statusList.put(2,mikeStatus);
-                    adapter.notifyItemChanged(2);
-                }
+                updateStatus(2, sharedPreferences.getInt(STATUS_MIKE, -1));
                 break;
             case REQUEST_HEADSET:
-                if(headsetStatus != sharedPreferences.getInt(STATUS_HEADSET,-1)){
-                    headsetStatus = sharedPreferences.getInt(STATUS_HEADSET,-1);
-                    statusList.put(3,headsetStatus);
-                    adapter.notifyItemChanged(3);
-                }
+                updateStatus(3, sharedPreferences.getInt(STATUS_HEADSET, -1));
                 break;
             case REQUEST_LCD:
-                if(lcdStatus != sharedPreferences.getInt(STATUS_LCD,-1)){
-                    lcdStatus = sharedPreferences.getInt(STATUS_LCD,-1);
-                    statusList.put(4,lcdStatus);
-                    adapter.notifyItemChanged(4);
-                }
+                updateStatus(4, sharedPreferences.getInt(STATUS_LCD, -1));
                 break;
             case REQUEST_SPEAKER:
-                if(speakerStatus != sharedPreferences.getInt(STATUS_SPEAKER,-1)){
-                    speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER,-1);
-                    statusList.put(5,speakerStatus);
-                    adapter.notifyItemChanged(5);
-                }
+                updateStatus(5, sharedPreferences.getInt(STATUS_SPEAKER, -1));
                 break;
             case REQUEST_RECEIVER:
-                if(receiverStatus != sharedPreferences.getInt(STATUS_RECEIVER,-1)){
-                    receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER,-1);
-                    statusList.put(6,receiverStatus);
-                    adapter.notifyItemChanged(6);
-                }
+                updateStatus(6, sharedPreferences.getInt(STATUS_RECEIVER, -1));
                 break;
             case REQUEST_CAMERA:
-                if(cameraStatus != sharedPreferences.getInt(STATUS_CAMERA,-1)){
-                    cameraStatus = sharedPreferences.getInt(STATUS_CAMERA,-1);
-                    statusList.put(7,cameraStatus);
-                    adapter.notifyItemChanged(7);
-                }
+                updateStatus(7, sharedPreferences.getInt(STATUS_CAMERA, -1));
                 break;
             case REQUEST_FLASH:
-                if(flashStatus != sharedPreferences.getInt(STATUS_FLASH,-1)){
-                    flashStatus = sharedPreferences.getInt(STATUS_FLASH,-1);
-                    statusList.put(8,flashStatus);
-                    adapter.notifyItemChanged(8);
-                }
+                updateStatus(8, sharedPreferences.getInt(STATUS_FLASH, -1));
                 break;
             case REQUEST_KEY:
-                if(keyStatus != sharedPreferences.getInt(STATUS_KEY,-1)){
-                    keyStatus = sharedPreferences.getInt(STATUS_KEY,-1);
-                    statusList.put(9,keyStatus);
-                    adapter.notifyItemChanged(9);
-                }
+                updateStatus(9, sharedPreferences.getInt(STATUS_KEY, -1));
                 break;
         }
     }
 
-
+    private void updateStatus(int position, int newStatus) {
+        if (statusList.get(position) != newStatus) {
+            statusList.put(position, newStatus);
+            adapter.notifyItemChanged(position);
+        }
+    }
 }
