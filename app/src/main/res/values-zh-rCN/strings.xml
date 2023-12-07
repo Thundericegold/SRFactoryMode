@@ -9,14 +9,17 @@
     <string name="android_version">Android版本:</string>
     <string name="ram">RAM:</string>
     <string name="rom">ROM:</string>
+    <string name="gb">G</string>
     <string name="battery_size">电池大小:</string>
     <string name="mah">毫安</string>
     <string name="screen_size">屏幕尺寸:</string>
     <string name="inches">英寸</string>
     <string name="screen_resolution">屏幕分辨率:</string>
     <string name="pixels">像素</string>
+    <string name="pixels_x">x</string>
     <string name="take_photos">拍照</string>
     <string name="call_112">拨打112</string>
+    <string name="call_number">tel:112</string>
     <string name="single_test">单项测试</string>
     <string name="test_report">测试报告</string>
     <!--endregion-->
@@ -52,8 +55,10 @@
     <string name="uncharged">未充电</string>
     <string name="current_electricity">当前电量:</string>
     <string name="current_electricity_test">100%</string>
+    <string name="electricity_unit">%</string>
     <string name="battery_voltage">电池电压:</string>
     <string name="battery_voltage_test">4421mV</string>
+    <string name="voltage_unit">mV</string>
     <string name="battery_temperature">电池温度:</string>
     <string name="battery_temperature_test">25.0</string>
     <string name="centigrade">度</string>
@@ -92,12 +97,19 @@
     <!--region Camera Test-->
     <string name="camera_proactive">前摄</string>
     <string name="camera_back_shooting">后摄</string>
+    <string name="configure_failed_toast">配置失败!</string>
+    <string name="save">已保存</string>
+    <string name="error">出现错误</string>
+    <string name="size_error_toast">找不到合适的预览尺寸</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
     <string name="flashlight_test_tip">闪光灯测试中，请观察是否正常...</string>
     <string name="flashlight_turn_on">开启闪光灯</string>
     <string name="flashlight_turn_off">关闭闪光灯</string>
+    <string name="flashlight_alert_title">错误 !!</string>
+    <string name="flashlight_alert_message">您的设备不支持闪光灯!</string>
+    <string name="flashlight_alert_positive">好的</string>
     <!--endregion-->
 
     <!--region Button Test-->
@@ -119,5 +131,6 @@
     <!--region Permission Toast-->
     <string name="permission_mike">请添加录音权限后重试</string>
     <string name="permission_call">请添加拨号权限后重试</string>
+    <string name="permission_camera">请添加相机权限后重试</string>
     <!--endregion-->
 </resources>

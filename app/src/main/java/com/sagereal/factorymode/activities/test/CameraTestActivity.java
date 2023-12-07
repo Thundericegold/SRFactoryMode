@@ -173,22 +173,19 @@ public class CameraTestActivity extends BaseTestActivity {
     }
 
     View.OnClickListener onClickListener = v -> {
-        switch (v.getId()) {
-            case R.id.toggle:
-                switchCamera();
-                break;
-            case R.id.pass:
-                editor.putInt(STATUS_CAMERA, 0);
-                editor.commit();
-                setResult(RESULT_PASS);
-                finish();
-                break;
-            case R.id.fail:
-                editor.putInt(STATUS_CAMERA, 1);
-                editor.commit();
-                setResult(RESULT_FAIL);
-                finish();
-                break;
+        int id = v.getId();
+        if (id == R.id.toggle) {
+            switchCamera();
+        } else if (id == R.id.pass) {
+            editor.putInt(STATUS_CAMERA, 0);
+            editor.commit();
+            setResult(RESULT_PASS);
+            finish();
+        } else if (id == R.id.fail) {
+            editor.putInt(STATUS_CAMERA, 1);
+            editor.commit();
+            setResult(RESULT_FAIL);
+            finish();
         }
     };
 
@@ -305,7 +302,7 @@ public class CameraTestActivity extends BaseTestActivity {
 
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(CameraTestActivity.this, "配置失败!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraTestActivity.this, getString(R.string.configure_failed_toast), Toast.LENGTH_SHORT).show();
                 }
             }, null);
         } catch (CameraAccessException e) {
@@ -337,7 +334,7 @@ public class CameraTestActivity extends BaseTestActivity {
                 buffer.get(bytes);
                 try (FileOutputStream output = new FileOutputStream(file)) {
                     output.write(bytes);
-                    Toast.makeText(CameraTestActivity.this, "保存", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraTestActivity.this, getString(R.string.save), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -356,11 +353,11 @@ public class CameraTestActivity extends BaseTestActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("出现错误");
+            System.out.println(getString(R.string.error));
         }
     }
 
-    private static Size chooseOptimalSize(Size[] choices, int width, int height, Size
+    private Size chooseOptimalSize(Size[] choices, int width, int height, Size
             aspectRatio) {
         //收集摄像头支持的大过预览Surface的分辨率
         List<Size> bigEnough = new ArrayList<>();
@@ -376,7 +373,7 @@ public class CameraTestActivity extends BaseTestActivity {
         if (bigEnough.size() > 0) {
             return Collections.min(bigEnough, new CompareSizesByArea());
         } else {
-            System.out.println("找不到合适的预览尺寸");
+            System.out.println(getString(R.string.size_error_toast));
             return choices[0];
         }
     }

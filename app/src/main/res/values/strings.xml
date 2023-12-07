@@ -8,14 +8,17 @@
     <string name="android_version">Android version:</string>
     <string name="ram">RAM:</string>
     <string name="rom">ROM:</string>
+    <string name="gb">G</string>
     <string name="battery_size">Battery size:</string>
     <string name="mah">MA</string>
     <string name="screen_size">Screen size:</string>
     <string name="inches">IN</string>
     <string name="screen_resolution">Screen Resolution:</string>
     <string name="pixels">Pixels</string>
+    <string name="pixels_x">x</string>
     <string name="take_photos">TAKE PHOTOS</string>
     <string name="call_112">CALL 112</string>
+    <string name="call_number">tel:112</string>
     <string name="single_test">SINGLE TEST</string>
     <string name="test_report">TEST REPORT</string>
     <!--endregion-->
@@ -52,8 +55,10 @@
     <string name="uncharged">Not charged</string>
     <string name="current_electricity">Current electricity:</string>
     <string name="current_electricity_test">100%</string>
+    <string name="electricity_unit">%</string>
     <string name="battery_voltage">Battery voltage:</string>
     <string name="battery_voltage_test">4421mV</string>
+    <string name="voltage_unit">mV</string>
     <string name="battery_temperature">Battery temperature:</string>
     <string name="battery_temperature_test">25.0</string>
     <string name="centigrade">℃</string>
@@ -93,12 +98,19 @@
     <!--region Camera Test-->
     <string name="camera_proactive">PROACTIVE</string>
     <string name="camera_back_shooting">BACK SHOOTING</string>
+    <string name="configure_failed_toast">Configure failed!</string>
+    <string name="save">Saved</string>
+    <string name="error">Error</string>
+    <string name="size_error_toast">Unable to find suitable preview size</string>
     <!--endregion-->
 
     <!--region Flashlight Test-->
     <string name="flashlight_test_tip">During the flash test, please observe whether it is normal</string>
     <string name="flashlight_turn_on">Turn On</string>
     <string name="flashlight_turn_off">Turn Off</string>
+    <string name="flashlight_alert_title">Error !!</string>
+    <string name="flashlight_alert_message">Your device doesn\'t support flash light!</string>
+    <string name="flashlight_alert_positive">OK</string>
     <!--endregion-->
 
     <!--region Button Test-->
@@ -120,5 +132,6 @@
     <!--region Permission Toast-->
     <string name="permission_mike">Need recording permission</string>
     <string name="permission_call">Need calling permission</string>
+    <string name="permission_camera">Need camera permission</string>
     <!--endregion-->
 </resources>

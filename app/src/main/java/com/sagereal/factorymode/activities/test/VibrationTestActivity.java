@@ -6,11 +6,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sagereal.factorymode.R;
-
-import java.security.Provider;
 
 public class VibrationTestActivity extends BaseTestActivity {
 
@@ -28,25 +24,20 @@ public class VibrationTestActivity extends BaseTestActivity {
         failButton.setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pass:
-                    stopVibrating();
-                    editor.putInt(STATUS_VIBRATION,0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    stopVibrating();
-                    editor.putInt(STATUS_VIBRATION,1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
-            }
+    View.OnClickListener onClickListener = v -> {
+        int id = v.getId();
+        if (id == R.id.pass) {
+            stopVibrating();
+            editor.putInt(STATUS_VIBRATION, 0);
+            editor.commit();
+            setResult(RESULT_PASS);
+            finish();
+        } else if (id == R.id.fail) {
+            stopVibrating();
+            editor.putInt(STATUS_VIBRATION, 1);
+            editor.commit();
+            setResult(RESULT_FAIL);
+            finish();
         }
     };
 
@@ -61,12 +52,10 @@ public class VibrationTestActivity extends BaseTestActivity {
     }
 
     void startVibrating() {
-        long[] timings = new long[] { 1000,1000,1000 };
-        int[] amplitudes = new int[] { 64,0,64 };
-        int repeat = 1; // Repeat from the second entry, index = 1.
+        long[] timings = new long[]{1000, 1000, 1000};
+        int[] amplitudes = new int[]{64, 0, 64};
+        int repeat = 1;
         VibrationEffect repeatingEffect = VibrationEffect.createWaveform(timings, amplitudes, repeat);
-        // repeatingEffect can be used in multiple places.
-
         vibrator.vibrate(repeatingEffect);
     }
 

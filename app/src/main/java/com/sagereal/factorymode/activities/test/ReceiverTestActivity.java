@@ -6,9 +6,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.sagereal.factorymode.R;
 
@@ -33,30 +30,29 @@ public class ReceiverTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pass:
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                    editor.putInt(STATUS_RECEIVER,0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                    editor.putInt(STATUS_RECEIVER,1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
+            int id = v.getId();
+            if (id == R.id.pass) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+                audioManager.setMode(AudioManager.MODE_NORMAL);
+                editor.putInt(STATUS_RECEIVER, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            } else if (id == R.id.fail) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+                audioManager.setMode(AudioManager.MODE_NORMAL);
+                editor.putInt(STATUS_RECEIVER, 1);
+                editor.commit();
+                setResult(RESULT_FAIL);
+                finish();
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +61,7 @@ public class ReceiverTestActivity extends BaseTestActivity {
         initListener();
         try {
             mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(ReceiverTestActivity.this,Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.anjing));
+            mediaPlayer.setDataSource(ReceiverTestActivity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.anjing));
             audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             audioManager.setSpeakerphoneOn(false);

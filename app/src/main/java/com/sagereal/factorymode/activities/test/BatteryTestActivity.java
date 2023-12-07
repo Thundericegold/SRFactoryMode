@@ -17,38 +17,38 @@ public class BatteryTestActivity extends BaseTestActivity {
     TextView batteryVoltageTextView;
     TextView batteryTemperatureTextView;
 
-    private BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 
             boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                status == BatteryManager.BATTERY_STATUS_FULL;
+                    status == BatteryManager.BATTERY_STATUS_FULL;
 
-            if (isCharging){
+            if (isCharging) {
                 chargingStatusTextView.setText(getString(R.string.charging));
-            }else {
+            } else {
                 chargingStatusTextView.setText(getString(R.string.uncharged));
             }
 
             // 获取当前电量
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-            float batteryPct = level / (float)scale;
+            float batteryPct = level / (float) scale;
             float p = batteryPct * 100;
 
-            currentElectricityTextView.setText(Math.round(p)+"%");
+            currentElectricityTextView.setText(Math.round(p) + getString(R.string.electricity_unit));
 
             // 获取电池电压
             int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
 
-            batteryVoltageTextView.setText(voltage+"mV");
+            batteryVoltageTextView.setText(voltage + getString(R.string.voltage_unit));
 
             // 获取电池温度
-            float temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)/10;
+            int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
 
-            batteryTemperatureTextView.setText(String.valueOf(temperature)+getString(R.string.centigrade));
+            batteryTemperatureTextView.setText(temperature + getString(R.string.centigrade));
         }
     };
 
@@ -81,19 +81,17 @@ public class BatteryTestActivity extends BaseTestActivity {
     }
 
     View.OnClickListener onClickListener = v -> {
-        switch (v.getId()) {
-            case R.id.pass:
-                editor.putInt(STATUS_BATTERY,0);
-                editor.commit();
-                setResult(RESULT_PASS);
-                finish();
-                break;
-            case R.id.fail:
-                editor.putInt(STATUS_BATTERY,1);
-                editor.commit();
-                setResult(RESULT_FAIL);
-                finish();
-                break;
+        int id = v.getId();
+        if (id == R.id.pass) {
+            editor.putInt(STATUS_BATTERY, 0);
+            editor.commit();
+            setResult(RESULT_PASS);
+            finish();
+        } else if (id == R.id.fail) {
+            editor.putInt(STATUS_BATTERY, 1);
+            editor.commit();
+            setResult(RESULT_FAIL);
+            finish();
         }
     };
 }

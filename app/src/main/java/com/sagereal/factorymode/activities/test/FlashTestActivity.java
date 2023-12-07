@@ -19,7 +19,6 @@ public class FlashTestActivity extends BaseTestActivity {
     private String mCameraId;
     private Boolean isTorchOn = true;
 
-
     @Override
     public void initView() {
         toggleButton = findViewById(R.id.toggle);
@@ -37,34 +36,31 @@ public class FlashTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.toggle:
-                    try {
-                        if (isTorchOn) {
-                            turnOffFlashLight();
-                            isTorchOn = false;
-                            toggleButton.setText(R.string.flashlight_turn_on);
-                        } else {
-                            turnOnFlashLight();
-                            isTorchOn = true;
-                            toggleButton.setText(R.string.flashlight_turn_off);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            int id = v.getId();
+            if (id == R.id.toggle) {
+                try {
+                    if (isTorchOn) {
+                        turnOffFlashLight();
+                        isTorchOn = false;
+                        toggleButton.setText(R.string.flashlight_turn_on);
+                    } else {
+                        turnOnFlashLight();
+                        isTorchOn = true;
+                        toggleButton.setText(R.string.flashlight_turn_off);
                     }
-                    break;
-                case R.id.pass:
-                    editor.putInt(STATUS_FLASH, 0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    editor.putInt(STATUS_FLASH, 1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (id == R.id.pass) {
+                editor.putInt(STATUS_FLASH, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            } else if (id == R.id.fail) {
+                editor.putInt(STATUS_FLASH, 1);
+                editor.commit();
+                setResult(RESULT_FAIL);
+                finish();
             }
         }
     };
@@ -76,15 +72,15 @@ public class FlashTestActivity extends BaseTestActivity {
         initView();
         initListener();
 
-        Boolean isFlashAvailable = getApplicationContext().getPackageManager()
+        boolean isFlashAvailable = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!isFlashAvailable) {
 
             AlertDialog alert = new AlertDialog.Builder(this)
                     .create();
-            alert.setTitle("Error !!");
-            alert.setMessage("Your device doesn't support flash light!");
-            alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            alert.setTitle(getString(R.string.flashlight_alert_title));
+            alert.setMessage(getString(R.string.flashlight_alert_message));
+            alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.flashlight_alert_positive), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {                    // closing the application
                     finish();
                     System.exit(0);

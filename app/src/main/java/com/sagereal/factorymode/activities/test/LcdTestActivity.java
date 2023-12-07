@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sagereal.factorymode.R;
-import com.sagereal.factorymode.activities.BaseActivity;
 
 public class LcdTestActivity extends BaseTestActivity {
 
@@ -29,31 +26,28 @@ public class LcdTestActivity extends BaseTestActivity {
     }
 
     View.OnClickListener onClickListener = v -> {
-        switch (v.getId()) {
-            case R.id.pass:
-                editor.putInt(STATUS_LCD,0);
-                editor.commit();
-                setResult(RESULT_PASS);
-                finish();
-                break;
-            case R.id.fail:
-                editor.putInt(STATUS_LCD,1);
-                editor.commit();
-                setResult(RESULT_FAIL);
-                finish();
-                break;
-            case R.id.lcd_layout:
-                if (status == 0){
-                    lcdLayout.setBackgroundColor(getColor(R.color.green));
-                    status = 1;
-                }else if (status == 1){
-                    lcdLayout.setBackgroundColor(getColor(R.color.grey));
-                    status = 2;
-                }else if (status == 2){
-                    lcdLayout.setBackgroundColor(getColor(R.color.red));
-                    status = 0;
-                }
-
+        int id = v.getId();
+        if (id == R.id.pass) {
+            editor.putInt(STATUS_LCD, 0);
+            editor.commit();
+            setResult(RESULT_PASS);
+            finish();
+        } else if (id == R.id.fail) {
+            editor.putInt(STATUS_LCD, 1);
+            editor.commit();
+            setResult(RESULT_FAIL);
+            finish();
+        } else if (id == R.id.lcd_layout) {
+            if (status == 0) {
+                lcdLayout.setBackgroundColor(getColor(R.color.green));
+                status = 1;
+            } else if (status == 1) {
+                lcdLayout.setBackgroundColor(getColor(R.color.grey));
+                status = 2;
+            } else if (status == 2) {
+                lcdLayout.setBackgroundColor(getColor(R.color.red));
+                status = 0;
+            }
         }
     };
 

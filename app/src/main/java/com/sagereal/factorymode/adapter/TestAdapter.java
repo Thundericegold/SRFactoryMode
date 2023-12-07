@@ -20,15 +20,16 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     LayoutInflater mInflater; //声明布局填充器
     String[] list;
     Context context; //声明上下文
-    Map<Integer,Integer> statusList;
+    Map<Integer, Integer> statusList;
 
-    private ClickListener myClickListener;
-    public interface ClickListener{
-        public void onClick(int position);
+    private final ClickListener myClickListener;
+
+    public interface ClickListener {
+        void onClick(int position);
     }
 
     //构造方法
-    public TestAdapter(Context context, String[] list, Map<Integer,Integer> statusList, ClickListener clickListener) {
+    public TestAdapter(Context context, String[] list, Map<Integer, Integer> statusList, ClickListener clickListener) {
         mInflater = LayoutInflater.from(context); //获取布局服务
         this.list = list;
         this.statusList = statusList;
@@ -41,7 +42,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     @Override
     public TestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.single_test_item, parent, false);
-        //View view = LayoutInflater.from(parent.getContext()).inflate( R.layout.list_item, parent, false);
         TestViewHolder testViewHolder = new TestViewHolder(view);
         return testViewHolder;
     }
@@ -50,27 +50,17 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.itemText.setText(list[position]);
-        switch (statusList.get(position)){
-            case -1:
-                holder.itemHolder.setBackgroundColor(context.getColor(R.color.white));
-                break;
-            case 0:
-                holder.itemHolder.setBackgroundColor(context.getColor(R.color.test_pass));
-                break;
-            case 1:
-                holder.itemHolder.setBackgroundColor(context.getColor(R.color.test_fail));
-                break;
-            default:
-                break;
+        Integer integer = statusList.get(position);
+        if (integer == -1) {
+            holder.itemHolder.setBackgroundColor(context.getColor(R.color.white));
+        } else if (integer == 0) {
+            holder.itemHolder.setBackgroundColor(context.getColor(R.color.test_pass));
+        } else if (integer == 1) {
+            holder.itemHolder.setBackgroundColor(context.getColor(R.color.test_fail));
         }
 
         //添加点击事件监听
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myClickListener.onClick(position);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> myClickListener.onClick(position));
     }
 
     //获取列表条目的总数
@@ -90,7 +80,5 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             itemText = itemView.findViewById(R.id.item_text);
             itemHolder = itemView.findViewById(R.id.item_holder);
         }
-
-
     }
 }

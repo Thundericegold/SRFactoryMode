@@ -1,9 +1,5 @@
 package com.sagereal.factorymode;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
 import com.sagereal.factorymode.activities.BaseActivity;
 import com.sagereal.factorymode.activities.SingleTestActivity;
 import com.sagereal.factorymode.activities.TestReportActivity;
@@ -35,13 +34,13 @@ public class MainActivity extends BaseActivity {
 
     private long lastBackDownTime;
     double batteryCapacity;
-    private final String phone = "tel:112";
+    private String phone;
     private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
     private final int CAMERA_REQUEST_CODE = 10002;//相机请求码
 
-    TextView deviceNameTextView,deviceTypeTextView,versionNumberTextView,androidVersionTextView,
-            batterySizeTextView,ramTextView,romTextView,screenSizeTextView,screenResolutionTextView;
-    Button cameraButton,dialButton,singleTestButton,testReportButton;
+    TextView deviceNameTextView, deviceTypeTextView, versionNumberTextView, androidVersionTextView,
+            batterySizeTextView, ramTextView, romTextView, screenSizeTextView, screenResolutionTextView;
+    Button cameraButton, dialButton, singleTestButton, testReportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initView();
         initListener();
+        phone = getString(R.string.call_number);
 
         String deviceName = Build.DEVICE;
         String deviceType = Build.MODEL;
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
         romTextView.setText(getTotalRom());
 
         DecimalFormat decimalFormat = new DecimalFormat("#");
-        String result = decimalFormat.format(getBatteryTotal(MainActivity.this))+getString(R.string.mah);
+        String result = decimalFormat.format(getBatteryTotal(MainActivity.this)) + getString(R.string.mah);
         batterySizeTextView.setText(result);
 
         double screenSize = getScreenSize(MainActivity.this);
@@ -77,11 +77,11 @@ public class MainActivity extends BaseActivity {
             WindowMetrics currentWindowMetrics = wm.getCurrentWindowMetrics();
             int width = currentWindowMetrics.getBounds().width();
             int height = currentWindowMetrics.getBounds().height();
-            screenResolution = width + "x" + height + getString(R.string.pixels);
-        }else {
+            screenResolution = width + getString(R.string.pixels_x) + height + getString(R.string.pixels);
+        } else {
             int width = wm.getDefaultDisplay().getWidth();
             int height = wm.getDefaultDisplay().getHeight();
-            screenResolution = width + "x" + height + getString(R.string.pixels);
+            screenResolution = width + getString(R.string.pixels_x) + height + getString(R.string.pixels);
         }
         screenResolutionTextView.setText(screenResolution);
     }
@@ -97,7 +97,6 @@ public class MainActivity extends BaseActivity {
         romTextView = findViewById(R.id.rom);
         screenSizeTextView = findViewById(R.id.screen_size);
         screenResolutionTextView = findViewById(R.id.screen_resolution);
-
         cameraButton = findViewById(R.id.camera);
         dialButton = findViewById(R.id.dial);
         singleTestButton = findViewById(R.id.single_test);
@@ -112,34 +111,27 @@ public class MainActivity extends BaseActivity {
         testReportButton.setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.camera:
-                    openCamera();
-                    break;
-                case R.id.dial:
-                    callPhoneUI();
-                    break;
-                case R.id.single_test:
-                    Intent intent1 = new Intent(MainActivity.this, SingleTestActivity.class);
-                    startActivity(intent1);
-                    break;
-                case R.id.test_report:
-                    Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
-                    startActivity(intent2);
-                    break;
-            }
+    View.OnClickListener onClickListener = view -> {
+        int id = view.getId();
+        if (id == R.id.camera) {
+            openCamera();
+        } else if (id == R.id.dial) {
+            callPhoneUI();
+        } else if (id == R.id.single_test) {
+            Intent intent1 = new Intent(MainActivity.this, SingleTestActivity.class);
+            startActivity(intent1);
+        } else if (id == R.id.test_report) {
+            Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
+            startActivity(intent2);
         }
     };
 
     @Override
     public void onBackPressed() {
         long currentBackDownTime = System.currentTimeMillis();
-        if (currentBackDownTime - lastBackDownTime < 1000){
+        if (currentBackDownTime - lastBackDownTime < 1000) {
             super.onBackPressed();
-        }else {
+        } else {
             Toast.makeText(this, getString(R.string.back_toast), Toast.LENGTH_SHORT).show();
             lastBackDownTime = currentBackDownTime;
         }
@@ -171,13 +163,13 @@ public class MainActivity extends BaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CALL_PHONE_REQUEST_CODE) {
             if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "请添加拨号权限后重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.permission_call), Toast.LENGTH_SHORT).show();
             } else {
                 callPhoneUI();
             }
-        }else if (requestCode == CAMERA_REQUEST_CODE) {
+        } else if (requestCode == CAMERA_REQUEST_CODE) {
             if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "请添加相机权限后重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
             } else {
                 openCamera();
             }
@@ -217,50 +209,49 @@ public class MainActivity extends BaseActivity {
 
     /**
      * RAM内存大小, 返回1GB/2GB/3GB/4GB/8G/16G
+     *
      * @return
      */
-    public static String getTotalRam(){
+    private String getTotalRam() {
         String path = "/proc/meminfo";
         String ramMemorySize = null;
-        int totalRam = 0 ;
-        try{
+        int totalRam = 0;
+        try {
             FileReader fileReader = new FileReader(path);
             BufferedReader br = new BufferedReader(fileReader, 4096);
             ramMemorySize = br.readLine().split("\\s+")[1];
             br.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(ramMemorySize != null){
-            totalRam = (int)Math.ceil((Float.valueOf(Float.parseFloat(ramMemorySize) / (1024 * 1024)).doubleValue()));
+        if (ramMemorySize != null) {
+            totalRam = (int) Math.ceil((Float.valueOf(Float.parseFloat(ramMemorySize) / (1024 * 1024)).doubleValue()));
         }
 
-        return totalRam + "G";
+        return totalRam + getString(R.string.gb);
     }
 
     /**
      * ROM内存大小，返回 64G/128G/256G/512G
+     *
      * @return
      */
-    private static String getTotalRom() {
+    private String getTotalRom() {
         File dataDir = Environment.getDataDirectory();
         StatFs stat = new StatFs(dataDir.getPath());
         long blockSize = stat.getBlockSizeLong();
         long totalBlocks = stat.getBlockCountLong();
         long size = totalBlocks * blockSize;
         long GB = 1024 * 1024 * 1024;
-        final long[] deviceRomMemoryMap = {2*GB, 4*GB, 8*GB, 16*GB, 32*GB, 64*GB, 128*GB, 256*GB, 512*GB, 1024*GB, 2048*GB};
-        String[] displayRomSize = {"2G","4G","8G","16G","32G","64G","128G","256G","512G","1024G","2048G"};
+        final long[] deviceRomMemoryMap = {2 * GB, 4 * GB, 8 * GB, 16 * GB, 32 * GB, 64 * GB, 128 * GB, 256 * GB, 512 * GB, 1024 * GB, 2048 * GB};
+        int[] displayRomSize = {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
         int i;
-        for(i = 0 ; i < deviceRomMemoryMap.length; i++) {
-            if(size <= deviceRomMemoryMap[i]) {
+        for (i = 0; i < deviceRomMemoryMap.length; i++) {
+            if (size <= deviceRomMemoryMap[i]) {
                 break;
             }
-            if(i == deviceRomMemoryMap.length) {
-                i--;
-            }
         }
-        return displayRomSize[i];
+        return displayRomSize[i] + getString(R.string.gb);
     }
 
     public double getBatteryTotal(Context context) {
@@ -286,10 +277,10 @@ public class MainActivity extends BaseActivity {
         int widthPixels = realDisplayMetrics.widthPixels;
         int heightPixels = realDisplayMetrics.heightPixels;
 
-        double x = Math.pow(widthPixels/realDisplayMetrics.xdpi,2);
-        double y = Math.pow(heightPixels/realDisplayMetrics.ydpi,2);
+        double x = Math.pow(widthPixels / realDisplayMetrics.xdpi, 2);
+        double y = Math.pow(heightPixels / realDisplayMetrics.ydpi, 2);
 
-        return Math.sqrt(x+y);
+        return Math.sqrt(x + y);
     }
 
 }

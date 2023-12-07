@@ -13,7 +13,7 @@ import com.sagereal.factorymode.R;
 public abstract class BaseActivity extends AppCompatActivity {
     public final int RESULT_PASS = 1111;
     public final int RESULT_FAIL = 2222;
-    
+
     public final String STATUS_BATTERY = "battery_status";
     public final String STATUS_VIBRATION = "vibration_status";
     public final String STATUS_MIKE = "mike_status";
@@ -42,8 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         //沉浸式状态栏,导航栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.black));//设置状态栏颜色
-//            getWindow().setStatusBarColor(color);//设置状态栏颜色
-//            getWindow().setNavigationBarColor(color);  //设置导航栏颜色
         }
 
     }

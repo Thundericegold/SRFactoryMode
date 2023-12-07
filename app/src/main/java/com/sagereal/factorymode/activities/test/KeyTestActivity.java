@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.sagereal.factorymode.R;
 
@@ -19,6 +16,7 @@ public class KeyTestActivity extends BaseTestActivity {
     Button volumeUpButton;
     Button volumeDownButton;
     Button powerButton;
+
     @Override
     public void initView() {
         volumeUpButton = findViewById(R.id.volume_up_btn);
@@ -35,19 +33,17 @@ public class KeyTestActivity extends BaseTestActivity {
     }
 
     View.OnClickListener onClickListener = v -> {
-        switch (v.getId()) {
-            case R.id.pass:
-                editor.putInt(STATUS_KEY,0);
-                editor.commit();
-                setResult(RESULT_PASS);
-                finish();
-                break;
-            case R.id.fail:
-                editor.putInt(STATUS_KEY,1);
-                editor.commit();
-                setResult(RESULT_FAIL);
-                finish();
-                break;
+        int id = v.getId();
+        if (id == R.id.pass) {
+            editor.putInt(STATUS_KEY, 0);
+            editor.commit();
+            setResult(RESULT_PASS);
+            finish();
+        } else if (id == R.id.fail) {
+            editor.putInt(STATUS_KEY, 1);
+            editor.commit();
+            setResult(RESULT_FAIL);
+            finish();
         }
     };
 
@@ -71,10 +67,10 @@ public class KeyTestActivity extends BaseTestActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.getAction() == KeyEvent.ACTION_DOWN){
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.getAction() == KeyEvent.ACTION_DOWN) {
             volumeUpButton.setVisibility(View.GONE);
         }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.getAction() == KeyEvent.ACTION_DOWN){
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             volumeDownButton.setVisibility(View.GONE);
         }
         return super.onKeyDown(keyCode, event);
@@ -85,7 +81,7 @@ public class KeyTestActivity extends BaseTestActivity {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             final String action = intent.getAction();
-            if(Intent.ACTION_SCREEN_OFF.equals(action)) {
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 powerButton.setVisibility(View.GONE);
             }
         }

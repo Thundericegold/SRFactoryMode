@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.sagereal.factorymode.R;
@@ -59,37 +58,33 @@ public class HeadsetTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pass:
-                    if (mediaPlayer!=null){
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        audioManager.setMode(AudioManager.MODE_NORMAL);
-                    }
-                    editor.putInt(STATUS_HEADSET, 0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    if (mediaPlayer!=null){
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        audioManager.setMode(AudioManager.MODE_NORMAL);
-                    }
-                    editor.putInt(STATUS_HEADSET, 1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
-                case R.id.test_btn:
-                case R.id.retest_btn:
-                    if (state == 1){
-                        test();
-                    }else {
-                        Toast.makeText(HeadsetTestActivity.this, getString(R.string.headset_test_toast_3), Toast.LENGTH_SHORT).show();
-                    }
-                    break;
+            int id = v.getId();
+            if (id == R.id.pass) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                }
+                editor.putInt(STATUS_HEADSET, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            } else if (id == R.id.fail) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                }
+                editor.putInt(STATUS_HEADSET, 1);
+                editor.commit();
+                setResult(RESULT_FAIL);
+                finish();
+            } else if (id == R.id.test_btn || id == R.id.retest_btn) {
+                if (state == 1) {
+                    test();
+                } else {
+                    Toast.makeText(HeadsetTestActivity.this, getString(R.string.headset_test_toast_3), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
@@ -103,7 +98,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         headphoneReceiver = new HeadphoneReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        registerReceiver(headphoneReceiver,filter);
+        registerReceiver(headphoneReceiver, filter);
     }
 
     @Override
@@ -177,16 +172,16 @@ public class HeadsetTestActivity extends BaseTestActivity {
         }
     }
 
-    private class HeadphoneReceiver extends BroadcastReceiver{
+    private class HeadphoneReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)){
-                state = intent.getIntExtra("state",-1);
-                if (state == 0){
+            if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
+                state = intent.getIntExtra("state", -1);
+                if (state == 0) {
                     //耳机拔出
                     Toast.makeText(context, getString(R.string.headset_test_toast_2), Toast.LENGTH_SHORT).show();
-                }else if (state == 1){
+                } else if (state == 1) {
                     //耳机插入
                     Toast.makeText(context, getString(R.string.headset_test_toast_1), Toast.LENGTH_SHORT).show();
                 }

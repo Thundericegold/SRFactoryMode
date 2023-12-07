@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sagereal.factorymode.R;
 
 import java.util.List;
-import java.util.Map;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
 
@@ -34,7 +32,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.test_report_item, parent, false);
-        //View view = LayoutInflater.from(parent.getContext()).inflate( R.layout.list_item, parent, false);
         ReportViewHolder reportViewHolder = new ReportViewHolder(view);
         return reportViewHolder;
     }

@@ -2,9 +2,7 @@ package com.sagereal.factorymode.activities.test;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -55,34 +53,29 @@ public class MikeTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pass:
-                    if (mediaPlayer!=null){
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        audioManager.setMode(AudioManager.MODE_NORMAL);
-                    }
-                    editor.putInt(STATUS_MIKE, 0);
-                    editor.commit();
-                    setResult(RESULT_PASS);
-                    finish();
-                    break;
-                case R.id.fail:
-                    if (mediaPlayer!=null){
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        audioManager.setMode(AudioManager.MODE_NORMAL);
-                    }
-
-                    editor.putInt(STATUS_MIKE, 1);
-                    editor.commit();
-                    setResult(RESULT_FAIL);
-                    finish();
-                    break;
-                case R.id.test_btn:
-                case R.id.retest_btn:
-                    test();
-                    break;
+            int id = v.getId();
+            if (id == R.id.pass) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                }
+                editor.putInt(STATUS_MIKE, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            } else if (id == R.id.fail) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                }
+                editor.putInt(STATUS_MIKE, 1);
+                editor.commit();
+                setResult(RESULT_FAIL);
+                finish();
+            } else if (id == R.id.test_btn || id == R.id.retest_btn) {
+                test();
             }
         }
     };
@@ -114,7 +107,7 @@ public class MikeTestActivity extends BaseTestActivity {
             if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, getString(R.string.permission_mike), Toast.LENGTH_SHORT).show();
             } else {
-               test();
+                test();
             }
         }
     }
