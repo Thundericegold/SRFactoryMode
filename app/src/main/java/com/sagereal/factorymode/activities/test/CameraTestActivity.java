@@ -151,10 +151,12 @@ public class CameraTestActivity extends BaseTestActivity {
     }
 
     public void reopenCamera() {
-        if (textureView.isAvailable()) {
-            openCamera(previewSize.getWidth(), previewSize.getHeight());
-        } else {
-            textureView.setSurfaceTextureListener(mSurfaceTextureListener);
+        if(textureView != null){
+            if (textureView.isAvailable()) {
+                openCamera(previewSize.getWidth(), previewSize.getHeight());
+            } else {
+                textureView.setSurfaceTextureListener(mSurfaceTextureListener);
+            }
         }
     }
 
