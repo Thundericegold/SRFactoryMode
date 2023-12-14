@@ -1,6 +1,6 @@
 <resources>
     <!--region Main Page-->
-    <string name="sr_factory_mode">SRFactoryMode</string>
+    <string name="sr_factory_mode">Surrey factory mode</string>
     <string name="basic_information">Basic Information</string>
     <string name="device_name">Device name:</string>
     <string name="device_model">Device model:</string>
@@ -14,7 +14,7 @@
     <string name="screen_size">Screen size:</string>
     <string name="inches">IN</string>
     <string name="screen_resolution">Screen Resolution:</string>
-    <string name="pixels">Pixels</string>
+    <string name="pixels">PX</string>
     <string name="pixels_x">x</string>
     <string name="take_photos">TAKE PHOTOS</string>
     <string name="call_112">CALL 112</string>
@@ -133,5 +133,12 @@
     <string name="permission_mike">Need recording permission</string>
     <string name="permission_call">Need calling permission</string>
     <string name="permission_camera">Need camera permission</string>
+    <!--endregion-->
+
+    <!--region Permission AlertDialog-->
+    <string name="permission_alert_title">权限申请</string>
+    <string name="permission_alert_message">由于Surrey factory mode不能获取权限，不能正常运行，请设置权限后使用。设置路径：系统设置->Surrey factory mode->权限</string>
+    <string name="permission_alert_positive">确定</string>
+    <string name="permission_alert_cancel">取消</string>
     <!--endregion-->
 </resources>

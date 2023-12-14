@@ -32,12 +32,12 @@ public class ReceiverTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                if (mediaPlayer != null){
+                if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
-                if (audioManager != null){
+                if (audioManager != null) {
                     audioManager.setMode(AudioManager.MODE_NORMAL);
                 }
                 editor.putInt(STATUS_RECEIVER, 0);
@@ -45,7 +45,7 @@ public class ReceiverTestActivity extends BaseTestActivity {
                 setResult(RESULT_PASS);
                 finish();
             } else if (id == R.id.fail) {
-                if (mediaPlayer != null){
+                if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;

@@ -133,4 +133,11 @@
     <string name="permission_call">请添加拨号权限后重试</string>
     <string name="permission_camera">请添加相机权限后重试</string>
     <!--endregion-->
+
+    <!--region Permission AlertDialog-->
+    <string name="permission_alert_title">权限申请</string>
+    <string name="permission_alert_message">由于萨瑞工厂模式不能获取权限，不能正常运行，请设置权限后使用。设置路径：系统设置->萨瑞工厂模式->权限</string>
+    <string name="permission_alert_positive">确定</string>
+    <string name="permission_alert_cancel">取消</string>
+    <!--endregion-->
 </resources>

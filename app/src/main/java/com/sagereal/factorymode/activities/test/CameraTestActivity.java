@@ -55,6 +55,7 @@ public class CameraTestActivity extends BaseTestActivity {
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
+    boolean isTested = false;
     //定义界面上的根布局管理器
     private FrameLayout rootLayout;
     Button toggleButton;
@@ -151,7 +152,7 @@ public class CameraTestActivity extends BaseTestActivity {
     }
 
     public void reopenCamera() {
-        if(textureView != null){
+        if (textureView != null) {
             if (textureView.isAvailable()) {
                 openCamera(previewSize.getWidth(), previewSize.getHeight());
             } else {
@@ -178,11 +179,14 @@ public class CameraTestActivity extends BaseTestActivity {
         int id = v.getId();
         if (id == R.id.toggle) {
             switchCamera();
+            isTested = true;
         } else if (id == R.id.pass) {
-            editor.putInt(STATUS_CAMERA, 0);
-            editor.commit();
-            setResult(RESULT_PASS);
-            finish();
+            if (isTested) {
+                editor.putInt(STATUS_CAMERA, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_CAMERA, 1);
             editor.commit();

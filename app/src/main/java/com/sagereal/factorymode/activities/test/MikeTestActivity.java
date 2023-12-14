@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.sagereal.factorymode.R;
-import com.sagereal.factorymode.utils.AudioRecorderUtil;
 
 import java.io.IOException;
 
@@ -29,8 +29,9 @@ public class MikeTestActivity extends BaseTestActivity {
     Button retestButton;
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
-    AudioRecorderUtil audioRecorderUtil;
+    private MediaRecorder mediaRecorder;
     private final int RECORD_AUDIO_REQUEST_CODE = 10001;
+    boolean isTested = false;
 
     @Override
     public void initView() {
@@ -55,16 +56,19 @@ public class MikeTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                if (isTested) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                        audioManager.setMode(AudioManager.MODE_NORMAL);
+                    }
+                    editor.putInt(STATUS_MIKE, 0);
+                    editor.commit();
+                    setResult(RESULT_PASS);
+                    finish();
                 }
-                editor.putInt(STATUS_MIKE, 0);
-                editor.commit();
-                setResult(RESULT_PASS);
-                finish();
             } else if (id == R.id.fail) {
+
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
@@ -75,7 +79,7 @@ public class MikeTestActivity extends BaseTestActivity {
                 setResult(RESULT_FAIL);
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {
-                test();
+                record();
             }
         }
     };
@@ -89,16 +93,6 @@ public class MikeTestActivity extends BaseTestActivity {
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
-    // 判断是否有录音权限
-    private boolean ifHaveRecordAudioPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // 动态申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
-            return false;
-        }
-        return true;
-    }
-
     // 申请权限回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -107,16 +101,16 @@ public class MikeTestActivity extends BaseTestActivity {
             if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, getString(R.string.permission_mike), Toast.LENGTH_SHORT).show();
             } else {
-                test();
+                record();
             }
         }
     }
 
-    private void test() {
-        if (ifHaveRecordAudioPermission()) {
+    private void record() {
+        isTested = false;
+        if (ifHaveRecordPermission()) {
             String outputPath = getExternalFilesDir(null).getAbsolutePath() + "/mikeTest.3gp";
-            audioRecorderUtil = new AudioRecorderUtil();
-            audioRecorderUtil.startRecording(outputPath);
+            startRecording(outputPath);
             tipsTextView.setText(R.string.mike_test_tip_2);
             testButton.setVisibility(View.GONE);
             retestButton.setVisibility(View.GONE);
@@ -126,7 +120,7 @@ public class MikeTestActivity extends BaseTestActivity {
             // 创建一个Runnable对象
             Runnable task1 = () -> {
                 // 执行某个任务
-                audioRecorderUtil.stopRecording();
+                stopRecording();
                 tipsTextView.setText(R.string.mike_test_tip_3);
                 try {
                     mediaPlayer = new MediaPlayer();
@@ -140,17 +134,49 @@ public class MikeTestActivity extends BaseTestActivity {
                 }
                 Handler handler2 = new Handler();
                 Runnable task2 = () -> {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
+                    stopRecording();
                     audioManager.setMode(AudioManager.MODE_NORMAL);
                     tipsTextView.setText(R.string.mike_test_tip_4);
                     testingButton.setVisibility(View.GONE);
                     retestButton.setVisibility(View.VISIBLE);
+                    isTested = true;
                 };
                 handler2.postDelayed(task2, 5000);
             };
             handler1.postDelayed(task1, 5000);
+        }
+    }
+
+    // 判断是否有录音权限
+    private boolean ifHaveRecordPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // 动态申请权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    private void startRecording(String outputFile) {
+        try {
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.setOutputFile(outputFile);
+            mediaRecorder.prepare();
+            mediaRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopRecording() {
+        try {
+            mediaRecorder.stop();
+            mediaRecorder.release();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 }

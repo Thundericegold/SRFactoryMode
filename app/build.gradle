@@ -3,13 +3,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+        storeFile file('D:\\zhy\\SRFactoryMode\\sign.jks')
+            storePassword '123456'
+            keyAlias 'key0'
+            keyPassword '123456'
+        }
+    }
     namespace 'com.sagereal.factorymode'
     compileSdk 33
 
     defaultConfig {
         applicationId "com.sagereal.factorymode"
         minSdk 28
-        targetSdk 33
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 

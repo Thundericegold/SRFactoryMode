@@ -16,6 +16,8 @@ public class KeyTestActivity extends BaseTestActivity {
     Button volumeUpButton;
     Button volumeDownButton;
     Button powerButton;
+    boolean isTested = false;
+    int testedNum = 0;
 
     @Override
     public void initView() {
@@ -35,10 +37,12 @@ public class KeyTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            editor.putInt(STATUS_KEY, 0);
-            editor.commit();
-            setResult(RESULT_PASS);
-            finish();
+            if (isTested) {
+                editor.putInt(STATUS_KEY, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_KEY, 1);
             editor.commit();
@@ -68,13 +72,25 @@ public class KeyTestActivity extends BaseTestActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.getAction() == KeyEvent.ACTION_DOWN) {
-            volumeUpButton.setVisibility(View.GONE);
+            if (volumeUpButton.getVisibility() == View.VISIBLE) {
+                volumeUpButton.setVisibility(View.GONE);
+                testedNum = testedNum + 1;
+                if (testedNum == 3) {
+                    isTested = true;
+                }
+            }
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
-            volumeDownButton.setVisibility(View.GONE);
+            if (volumeDownButton.getVisibility() == View.VISIBLE) {
+                volumeDownButton.setVisibility(View.GONE);
+                testedNum = testedNum + 1;
+                if (testedNum == 3) {
+                    isTested = true;
+                }
+            }
         }
-        return super.onKeyDown(keyCode, event);
-
+//        return super.onKeyDown(keyCode, event);
+        return true;
     }
 
     private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
@@ -82,7 +98,13 @@ public class KeyTestActivity extends BaseTestActivity {
         public void onReceive(final Context context, final Intent intent) {
             final String action = intent.getAction();
             if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                powerButton.setVisibility(View.GONE);
+                if (powerButton.getVisibility() == View.VISIBLE) {
+                    powerButton.setVisibility(View.GONE);
+                    testedNum = testedNum + 1;
+                    if (testedNum == 3) {
+                        isTested = true;
+                    }
+                }
             }
         }
     };
