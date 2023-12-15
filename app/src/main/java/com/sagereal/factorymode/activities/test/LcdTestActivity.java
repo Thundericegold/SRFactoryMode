@@ -10,6 +10,7 @@ public class LcdTestActivity extends BaseTestActivity {
 
     LinearLayout lcdLayout;
     int status = 0;
+    boolean isTested = false;
 
     @Override
     public void initView() {
@@ -28,10 +29,12 @@ public class LcdTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            editor.putInt(STATUS_LCD, 0);
-            editor.commit();
-            setResult(RESULT_PASS);
-            finish();
+            if (isTested){
+                editor.putInt(STATUS_LCD, 0);
+                editor.commit();
+                setResult(RESULT_PASS);
+                finish();
+            }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_LCD, 1);
             editor.commit();
@@ -44,6 +47,7 @@ public class LcdTestActivity extends BaseTestActivity {
             } else if (status == 1) {
                 lcdLayout.setBackgroundColor(getColor(R.color.grey));
                 status = 2;
+                isTested = true;
             } else if (status == 2) {
                 lcdLayout.setBackgroundColor(getColor(R.color.red));
                 status = 0;
