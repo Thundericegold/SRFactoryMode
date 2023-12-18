@@ -275,6 +275,7 @@ public class CameraTestActivity extends BaseTestActivity {
         try {
             SurfaceTexture texture = textureView.getSurfaceTexture();
             texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
+//            texture.setDefaultBufferSize(rootLayout.getWidth(), rootLayout.getHeight());
             Surface surface = new Surface(texture);
             //创建作为预览的CaptureRequest.Builder
             previewRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -350,12 +351,12 @@ public class CameraTestActivity extends BaseTestActivity {
             //获取最佳的预览尺寸
             previewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class), width, height, largest);
             //根据选中的预览尺寸来调整预览组件(TextureView)的长宽比
-            int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                textureView.setAspectRatio(previewSize.getWidth(), previewSize.getHeight());
-            } else {
-                textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
-            }
+//            int orientation = getResources().getConfiguration().orientation;
+//            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                textureView.setAspectRatio(previewSize.getWidth(), previewSize.getHeight());
+//            } else {
+//                textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
+//            }
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
