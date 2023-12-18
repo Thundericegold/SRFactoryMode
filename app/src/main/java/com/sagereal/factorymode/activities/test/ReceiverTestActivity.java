@@ -32,27 +32,11 @@ public class ReceiverTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                if (audioManager != null) {
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                }
                 editor.putInt(STATUS_RECEIVER, 0);
                 editor.commit();
                 setResult(RESULT_PASS);
                 finish();
             } else if (id == R.id.fail) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                if (audioManager != null) {
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                }
                 editor.putInt(STATUS_RECEIVER, 1);
                 editor.commit();
                 setResult(RESULT_FAIL);
@@ -67,6 +51,11 @@ public class ReceiverTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_receiver_test);
         initView();
         initListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(ReceiverTestActivity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.anjing));
@@ -77,6 +66,19 @@ public class ReceiverTestActivity extends BaseTestActivity {
             mediaPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (audioManager != null) {
+            audioManager.setMode(AudioManager.MODE_NORMAL);
         }
     }
 }

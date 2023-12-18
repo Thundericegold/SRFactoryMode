@@ -28,13 +28,11 @@ public class SpeakerTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                mediaPlayer.stop();
                 editor.putInt(STATUS_SPEAKER, 0);
                 editor.commit();
                 setResult(RESULT_PASS);
                 finish();
             } else if (id == R.id.fail) {
-                mediaPlayer.stop();
                 editor.putInt(STATUS_SPEAKER, 1);
                 editor.commit();
                 setResult(RESULT_FAIL);
@@ -49,7 +47,19 @@ public class SpeakerTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_speaker_test);
         initView();
         initListener();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mediaPlayer = MediaPlayer.create(SpeakerTestActivity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.anjing));
         mediaPlayer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mediaPlayer.stop();
     }
 }

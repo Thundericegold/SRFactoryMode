@@ -221,6 +221,9 @@ public class CameraTestActivity extends BaseTestActivity {
             //为TextureView组件设置监听器
             textureView.setSurfaceTextureListener(mSurfaceTextureListener);
             rootLayout.addView(textureView);
+        }else {
+            Toast.makeText(this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
