@@ -21,6 +21,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -32,6 +33,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.sagereal.factorymode.R;
 import com.sagereal.factorymode.activities.camera.AutoFitTextureView;
 
@@ -47,6 +51,7 @@ import java.util.List;
 public class CameraTestActivity extends BaseTestActivity {
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    private static final String TAG = "zhy";
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -78,22 +83,25 @@ public class CameraTestActivity extends BaseTestActivity {
         @Override
         public void onSurfaceTextureAvailable(@NonNull SurfaceTexture surface, int width, int height) {
             //当Texture可用时打开摄像头
+            Log.d(TAG, "onSurfaceTextureAvailable: ");
             openCamera(width, height);
         }
 
         @Override
         public void onSurfaceTextureSizeChanged(@NonNull SurfaceTexture surface, int width, int height) {
+            Log.d(TAG, "onSurfaceTextureSizeChanged: ");
             configureTransform(width, height);
         }
 
         @Override
         public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
+            Log.d(TAG, "onSurfaceTextureDestroyed: ");
             return true;
         }
 
         @Override
         public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
-
+            Log.d(TAG, "onSurfaceTextureUpdated: ");
         }
     };
 
@@ -101,6 +109,7 @@ public class CameraTestActivity extends BaseTestActivity {
         //摄像头被打开时激发该方法
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
+            Log.d(TAG, "onOpened: ");
             CameraTestActivity.this.cameraDevice = camera;
             //开始预览
             createCameraPreviewSession();
@@ -109,6 +118,7 @@ public class CameraTestActivity extends BaseTestActivity {
         //摄像头断开连接时激发该方法
         @Override
         public void onDisconnected(@NonNull CameraDevice camera) {
+            Log.d(TAG, "onDisconnected: ");
             camera.close();
             CameraTestActivity.this.cameraDevice = null;
         }
@@ -116,6 +126,7 @@ public class CameraTestActivity extends BaseTestActivity {
         //打开摄像头出现错误时激发该方法
         @Override
         public void onError(@NonNull CameraDevice camera, int error) {
+            Log.d(TAG, "onError: ");
             camera.close();
             CameraTestActivity.this.cameraDevice = null;
             CameraTestActivity.this.finish();
@@ -166,6 +177,7 @@ public class CameraTestActivity extends BaseTestActivity {
         toggleButton = findViewById(R.id.toggle);
         passButton = findViewById(R.id.pass);
         failButton = findViewById(R.id.fail);
+        rootLayout = findViewById(R.id.root_layout);
     }
 
     @Override
@@ -201,8 +213,41 @@ public class CameraTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_camera_test);
         initView();
         initListener();
-        rootLayout = findViewById(R.id.root_layout);
-        requestPermissions(new String[]{Manifest.permission.CAMERA}, 0x123);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        XXPermissions.with(this)
+                .permission(Permission.CAMERA)
+                // 设置权限请求拦截器（局部设置）
+                //.interceptor(new PermissionInterceptor())
+                // 设置不触发错误检测机制（局部设置）
+                //.unchecked()
+                .request(new OnPermissionCallback() {
+
+                    @Override
+                    public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        if (!allGranted) {
+                            Toast.makeText(CameraTestActivity.this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
+                            finish();
+                            return;
+                        }else {
+                            //创建预览摄像头照片的TextureView组件
+                            textureView = new AutoFitTextureView(CameraTestActivity.this, null);
+                            //为TextureView组件设置监听器
+                            textureView.setSurfaceTextureListener(mSurfaceTextureListener);
+                            rootLayout.addView(textureView);
+                            Log.d(TAG, "rootLayout.addView(textureView)完成");
+                        }
+                    }
+
+                    @Override
+                    public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+                        Toast.makeText(CameraTestActivity.this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
     }
 
     @Override
@@ -211,21 +256,6 @@ public class CameraTestActivity extends BaseTestActivity {
         closeCamera();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0x123 && grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            //创建预览摄像头照片的TextureView组件
-            textureView = new AutoFitTextureView(CameraTestActivity.this, null);
-            //为TextureView组件设置监听器
-            textureView.setSurfaceTextureListener(mSurfaceTextureListener);
-            rootLayout.addView(textureView);
-        }else {
-            Toast.makeText(this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
 
     //根据手机的旋转方向确定预览图像的方向
     private void configureTransform(int viewWidth, int viewHeight) {
@@ -278,7 +308,6 @@ public class CameraTestActivity extends BaseTestActivity {
         try {
             SurfaceTexture texture = textureView.getSurfaceTexture();
             texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
-//            texture.setDefaultBufferSize(rootLayout.getWidth(), rootLayout.getHeight());
             Surface surface = new Surface(texture);
             //创建作为预览的CaptureRequest.Builder
             previewRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -397,52 +426,4 @@ public class CameraTestActivity extends BaseTestActivity {
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() - (long) rhs.getWidth() * rhs.getHeight());
         }
     }
-
-    //拍照
-    private void captureStillPicture() {
-        try {
-            if (cameraDevice == null) {
-                return;
-            }
-            //创建作为拍照的CaptureRequest.Builder
-            CaptureRequest.Builder captureRequestBuilder =
-                    cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
-            //将imageReader的surface作为CaptureRequest.Builder的目标
-            captureRequestBuilder.addTarget(imageReader.getSurface());
-            //设置自动对焦模式
-            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            //设置自动曝光模式
-            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-            //获取设备方向
-            int rotation = getWindowManager().getDefaultDisplay().getRotation();
-            //根据设备方向计算设置照片的方向
-            captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            //停止连续取景
-            captureSession.stopRepeating();
-            //捕获静态图像
-            captureSession.capture(captureRequestBuilder.build(),
-                    new CameraCaptureSession.CaptureCallback() {
-                        @Override
-                        public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
-                            try {
-                                //重设自动对焦模式
-                                previewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
-                                        CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-                                //设置自动曝光模式
-                                previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                                        CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-                                //打开连续取景模式
-                                captureSession.setRepeatingRequest(previewRequest, null, null);
-                            } catch (CameraAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, null);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

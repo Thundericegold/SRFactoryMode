@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.hjq.permissions.XXPermissions;
 import com.sagereal.factorymode.R;
 
 import java.io.IOException;

@@ -1,18 +1,15 @@
 package com.sagereal.factorymode;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,9 +18,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.sagereal.factorymode.activities.BaseActivity;
 import com.sagereal.factorymode.activities.SingleTestActivity;
 import com.sagereal.factorymode.activities.TestReportActivity;
@@ -32,16 +31,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-    boolean flag = false;
     private long lastBackDownTime;
     double batteryCapacity;
     private String phone;
-    private final int CALL_PHONE_REQUEST_CODE = 10001;//拨号请求码
-    private final int CAMERA_REQUEST_CODE = 10002;//相机请求码
-    private final int RECORD_AUDIO_REQUEST_CODE = 10003;//录音请求码
 
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
@@ -98,9 +94,56 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (!checkPermissions()) {
-            requestPermissions();
-        }
+        XXPermissions.with(this)
+                .permission(Permission.RECORD_AUDIO)
+                .permission(Permission.CAMERA)
+                .permission(Permission.CALL_PHONE)
+                // 设置权限请求拦截器（局部设置）
+                //.interceptor(new PermissionInterceptor())
+                // 设置不触发错误检测机制（局部设置）
+                //.unchecked()
+                .request(new OnPermissionCallback() {
+
+                    @Override
+                    public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        if (!allGranted) {
+//                            showAlertDialog(permissions);
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+                        if (doNotAskAgain) {
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            showAlertDialog(permissions);
+                        } else {
+                            showAlertDialog(permissions);
+                        }
+                    }
+                });
+    }
+
+    private void showAlertDialog(List<String> permissions) {
+        builder.setTitle(getString(R.string.permission_alert_title))
+                .setMessage(getString(R.string.permission_alert_message))
+                .setPositiveButton(getString(R.string.permission_alert_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //跳转应用消息，间接打开应用权限设置-效率高
+                        XXPermissions.startPermissionActivity(MainActivity.this, permissions);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.permission_alert_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog = builder.create();
+        builder.setCancelable(false);
+        alertDialog.show();
     }
 
     @Override
@@ -162,80 +205,27 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    // 判断是否有拨号权限
-    private boolean ifHaveCallPhonePermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // 动态申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_REQUEST_CODE);
-            return false;
-        }
-        return true;
-    }
-
-    // 判断是否有相机权限
-    private boolean ifHaveCameraPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // 动态申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-            return false;
-        }
-        return true;
-    }
-
-//    // 申请权限回调
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == CALL_PHONE_REQUEST_CODE) {
-//            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(this, getString(R.string.permission_call), Toast.LENGTH_SHORT).show();
-//            } else {
-//                flagCall = true;
-//            }
-//        } else if (requestCode == CAMERA_REQUEST_CODE) {
-//            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(this, getString(R.string.permission_camera), Toast.LENGTH_SHORT).show();
-//            } else {
-//                flagCamera = true;
-//            }
-//        } else if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-//            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(this, getString(R.string.permission_mike), Toast.LENGTH_SHORT).show();
-//            } else {
-//                flagRecord = true;
-//            }
-//        }
-//    }
-
     // 直接拨号
     private void callPhone() {
-//        if (ifHaveCallPhonePermission()) {
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(phone)));
-//        }
     }
 
     // 跳转到拨号界面
     private void callUI() {
-//        if (ifHaveCallPhonePermission()) {
         startActivity(new Intent(Intent.ACTION_CALL_BUTTON));
-//        }
     }
 
 
     // 跳转到拨号界面 同时附带号码
     private void callPhoneUI() {
-        if (ifHaveCallPhonePermission()) {
-            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phone)));
-        }
+        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phone)));
     }
 
     private void openCamera() {
-        if (ifHaveCameraPermission()) {
-            Intent mIntent = new Intent();
-            mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-            startActivity(mIntent);
-        }
+        Intent mIntent = new Intent();
+        mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+        startActivity(mIntent);
     }
 
     /**
@@ -313,74 +303,4 @@ public class MainActivity extends BaseActivity {
 
         return Math.sqrt(x + y);
     }
-
-    // List of permissions to request
-    private static final String[] PERMISSIONS = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.CALL_PHONE
-    };
-    // Request code for permissions
-    private static final int PERMISSION_REQUEST_CODE = 200;
-
-    // Method to check if all permissions are granted
-    private boolean checkPermissions() {
-        for (String permission : PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Method to request permissions
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
-    }
-
-    // Override onRequestPermissionsResult method to handle permission results
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length > 0) {
-            boolean allGranted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    allGranted = false;
-                    break;
-                }
-            }
-            if (allGranted) {
-                // All permissions are granted
-                flag = true;
-            } else {
-                // Some permissions are not granted
-                flag = false;
-                builder.setTitle(getString(R.string.permission_alert_title))
-                        .setMessage(getString(R.string.permission_alert_message))
-                        .setPositiveButton(getString(R.string.permission_alert_positive), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //跳转应用消息，间接打开应用权限设置-效率高
-                                Intent intent = new Intent();
-                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                intent.setData(uri);
-                                startActivity(intent);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.permission_alert_cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                alertDialog = builder.create();
-                builder.setCancelable(false);
-                alertDialog.show();
-            }
-        }
-    }
-
 }
