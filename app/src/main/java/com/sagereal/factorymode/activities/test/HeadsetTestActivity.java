@@ -1,8 +1,10 @@
 package com.sagereal.factorymode.activities.test;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -20,9 +22,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.sagereal.factorymode.R;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HeadsetTestActivity extends BaseTestActivity {
 
@@ -32,9 +38,10 @@ public class HeadsetTestActivity extends BaseTestActivity {
     Button retestButton;
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
     private MediaRecorder mediaRecorder;
     private HeadphoneReceiver headphoneReceiver;
-    private final int RECORD_AUDIO_REQUEST_CODE = 10001;
     private int state = 0;
     boolean isTested = false;
 
@@ -84,12 +91,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {
                 if (state == 1) {
-                    if (ActivityCompat.checkSelfPermission(HeadsetTestActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                        // 动态申请权限
-                        ActivityCompat.requestPermissions(HeadsetTestActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
-                    } else {
-                        test();
-                    }
+                    test();
                 } else {
                     Toast.makeText(HeadsetTestActivity.this, getString(R.string.headset_test_toast_3), Toast.LENGTH_SHORT).show();
                 }
@@ -103,6 +105,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_headset_test);
         initView();
         initListener();
+        builder = new AlertDialog.Builder(this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         headphoneReceiver = new HeadphoneReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
@@ -110,32 +113,64 @@ public class HeadsetTestActivity extends BaseTestActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        XXPermissions.with(this)
+                .permission(Permission.RECORD_AUDIO)
+                // 设置权限请求拦截器（局部设置）
+                //.interceptor(new PermissionInterceptor())
+                // 设置不触发错误检测机制（局部设置）
+                //.unchecked()
+                .request(new OnPermissionCallback() {
+
+                    @Override
+                    public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        if (!allGranted) {
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+                        showAlertDialog(permissions);
+                    }
+                });
+    }
+
+    private void showAlertDialog(List<String> permissions) {
+        builder.setTitle(getString(R.string.permission_alert_title))
+                .setMessage(getString(R.string.permission_alert_message))
+                .setPositiveButton(getString(R.string.permission_alert_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //跳转应用消息，间接打开应用权限设置-效率高
+                        XXPermissions.startPermissionActivity(HeadsetTestActivity.this, permissions);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.permission_alert_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog = builder.create();
+        builder.setCancelable(false);
+        alertDialog.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(headphoneReceiver);
-    }
-
-    // 判断是否有录音权限
-    private boolean ifHaveRecordAudioPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // 动态申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
-            return false;
-        }
-        return true;
-    }
-
-    // 申请权限回调
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, getString(R.string.permission_mike), Toast.LENGTH_SHORT).show();
-            } else {
-                test();
-            }
-        }
     }
 
     private void test() {

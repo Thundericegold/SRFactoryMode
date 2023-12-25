@@ -29,7 +29,7 @@ public class LcdTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            if (isTested){
+            if (isTested) {
                 editor.putInt(STATUS_LCD, 0);
                 editor.commit();
                 setResult(RESULT_PASS);

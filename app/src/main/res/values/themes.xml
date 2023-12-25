@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.SRFactoryMode" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -23,6 +23,7 @@
         <item name="android:textSize">@dimen/dimen_normal</item>
         <item name="android:textColor">@color/grey_text</item>
     </style>
+
     <style name="NormalButton">
         <item name="android:textSize">@dimen/dimen_main_btn_text</item>
         <item name="android:textColor">@color/black_btn_text</item>

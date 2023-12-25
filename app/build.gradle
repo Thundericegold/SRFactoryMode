@@ -1,11 +1,12 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
     signingConfigs {
         release {
-        storeFile file('D:\\zhy\\SRFactoryMode\\sign.jks')
+            storeFile file('D:\\zhy\\SRFactoryMode\\sign.jks')
             storePassword '123456'
             keyAlias 'key0'
             keyPassword '123456'

@@ -3,28 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-
-
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--存储图像或者视频权限-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 存储图像或者视频权限 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" android:maxSdkVersion="32"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
-    <!--录制音频权限-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" /> <!-- 录制音频权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -42,6 +40,7 @@
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />
+
         <activity
             android:name=".activities.test.BatteryTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -77,6 +76,15 @@
         </activity>
         <activity
             android:name=".activities.test.CameraTestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.test.CameraTestOldActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:screenOrientation="portrait">

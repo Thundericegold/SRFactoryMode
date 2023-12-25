@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sagereal.factorymode.R;
-import com.sagereal.factorymode.activities.test.LcdTestActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public final int RESULT_PASS = 1111;

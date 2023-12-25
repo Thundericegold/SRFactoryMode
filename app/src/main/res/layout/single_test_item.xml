@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/single_test"
         android:textSize="@dimen/dimen_main_btn_text"
-        android:textColor="@color/grey_text"/>
+        android:textColor="@color/grey_text" />
 
 </LinearLayout>

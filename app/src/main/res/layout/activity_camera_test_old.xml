@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.test.KeyTestActivity">
+    tools:context=".activities.test.CameraTestOldActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,47 +16,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/key_test"
+            android:text="@string/camera_test"
             android:textSize="@dimen/dimen_appbar_text"
             android:textColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dimen_small_spacing"
-        android:paddingEnd="@dimen/dimen_small_spacing"
-        android:paddingTop="@dimen/dimen_small_spacing"
-        android:orientation="vertical">
+        android:layout_height="@dimen/dimen_0"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="@color/grey">
 
         <Button
-            android:id="@+id/volume_up_btn"
-            android:layout_width="match_parent"
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/dimen_main_btn"
-            android:text="@string/volume_up"
-            android:theme="@style/NormalButton" />
+            android:text="@string/camera_proactive"
+            android:theme="@style/NormalButton"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dimen_middle_spacing"
+            android:layout_marginEnd="@dimen/dimen_middle_spacing" />
+    </FrameLayout>
 
-        <Button
-            android:id="@+id/volume_down_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/dimen_main_btn"
-            android:text="@string/volume_down"
-            android:theme="@style/NormalButton" />
-
-        <Button
-            android:id="@+id/power_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/dimen_main_btn"
-            android:text="@string/power_key"
-            android:theme="@style/NormalButton" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dimen_state_height"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dimen_small_spacing"
         android:paddingRight="@dimen/dimen_small_spacing"

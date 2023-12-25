@@ -114,12 +114,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
-                        if (doNotAskAgain) {
-                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                            showAlertDialog(permissions);
-                        } else {
-                            showAlertDialog(permissions);
-                        }
+                        showAlertDialog(permissions);
                     }
                 });
     }

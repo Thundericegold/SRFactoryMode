@@ -2,6 +2,7 @@ package com.sagereal.factorymode.activities.camera;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.TextureView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class AutoFitTextureView extends TextureView {
                 setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
             }
         }
+        Log.d("zhy", "onMeasure: ");
     }
 
 }

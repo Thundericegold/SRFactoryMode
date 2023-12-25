@@ -59,7 +59,7 @@ public class KeyTestActivity extends BaseTestActivity {
         initListener();
 
         //电源键监听
-        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        final IntentFilter filter = new IntentFilter("com.sgrl.pjj.factorymode.KeyTestActivity_Power");
         registerReceiver(mBatInfoReceiver, filter);
     }
 
@@ -79,6 +79,7 @@ public class KeyTestActivity extends BaseTestActivity {
                     isTested = true;
                 }
             }
+            return true;
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (volumeDownButton.getVisibility() == View.VISIBLE) {
@@ -88,16 +89,16 @@ public class KeyTestActivity extends BaseTestActivity {
                     isTested = true;
                 }
             }
+            return true;
         }
-//        return super.onKeyDown(keyCode, event);
-        return true;
+        return super.onKeyDown(keyCode, event);
     }
 
     private final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             final String action = intent.getAction();
-            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+            if ("com.sgrl.pjj.factorymode.KeyTestActivity_Power".equals(action)) {
                 if (powerButton.getVisibility() == View.VISIBLE) {
                     powerButton.setVisibility(View.GONE);
                     testedNum = testedNum + 1;

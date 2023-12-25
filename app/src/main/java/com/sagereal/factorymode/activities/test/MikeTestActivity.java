@@ -1,8 +1,8 @@
 package com.sagereal.factorymode.activities.test;
 
-import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -12,15 +12,16 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.sagereal.factorymode.R;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MikeTestActivity extends BaseTestActivity {
 
@@ -28,10 +29,11 @@ public class MikeTestActivity extends BaseTestActivity {
     Button testButton;
     Button testingButton;
     Button retestButton;
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
     private MediaRecorder mediaRecorder;
-    private final int RECORD_AUDIO_REQUEST_CODE = 10001;
     boolean isTested = false;
 
     @Override
@@ -69,7 +71,6 @@ public class MikeTestActivity extends BaseTestActivity {
                     finish();
                 }
             } else if (id == R.id.fail) {
-
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
                     mediaPlayer = null;
@@ -91,71 +92,104 @@ public class MikeTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_mike_test);
         initView();
         initListener();
+        builder = new AlertDialog.Builder(this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    }
-
-    // 申请权限回调
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-            if (permissions.length != 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, getString(R.string.permission_mike), Toast.LENGTH_SHORT).show();
-            } else {
-                record();
-            }
-        }
     }
 
     private void record() {
         isTested = false;
-        if (ifHaveRecordPermission()) {
-            String outputPath = getExternalFilesDir(null).getAbsolutePath() + "/mikeTest.3gp";
-            startRecording(outputPath);
-            tipsTextView.setText(R.string.mike_test_tip_2);
-            testButton.setVisibility(View.GONE);
-            retestButton.setVisibility(View.GONE);
-            testingButton.setVisibility(View.VISIBLE);
-            // 创建一个Handler对象
-            Handler handler1 = new Handler();
-            // 创建一个Runnable对象
-            Runnable task1 = () -> {
-                // 执行某个任务
+        String outputPath = getExternalFilesDir(null).getAbsolutePath() + "/mikeTest.3gp";
+        startRecording(outputPath);
+        tipsTextView.setText(R.string.mike_test_tip_2);
+        testButton.setVisibility(View.GONE);
+        retestButton.setVisibility(View.GONE);
+        testingButton.setVisibility(View.VISIBLE);
+        // 创建一个Handler对象
+        Handler handler1 = new Handler();
+        // 创建一个Runnable对象
+        Runnable task1 = () -> {
+            // 执行某个任务
+            stopRecording();
+            tipsTextView.setText(R.string.mike_test_tip_3);
+            try {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(MikeTestActivity.this, Uri.parse(outputPath));
+                audioManager.setMode(AudioManager.MODE_IN_CALL);
+                audioManager.setSpeakerphoneOn(true);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Handler handler2 = new Handler();
+            Runnable task2 = () -> {
                 stopRecording();
-                tipsTextView.setText(R.string.mike_test_tip_3);
-                try {
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(MikeTestActivity.this, Uri.parse(outputPath));
-                    audioManager.setMode(AudioManager.MODE_IN_CALL);
-                    audioManager.setSpeakerphoneOn(true);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Handler handler2 = new Handler();
-                Runnable task2 = () -> {
-                    stopRecording();
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                    tipsTextView.setText(R.string.mike_test_tip_4);
-                    testingButton.setVisibility(View.GONE);
-                    retestButton.setVisibility(View.VISIBLE);
-                    isTested = true;
-                };
-                handler2.postDelayed(task2, 5000);
+                audioManager.setMode(AudioManager.MODE_NORMAL);
+                tipsTextView.setText(R.string.mike_test_tip_4);
+                testingButton.setVisibility(View.GONE);
+                retestButton.setVisibility(View.VISIBLE);
+                isTested = true;
             };
-            handler1.postDelayed(task1, 5000);
-        }
+            handler2.postDelayed(task2, 5000);
+        };
+        handler1.postDelayed(task1, 5000);
+
     }
 
-    // 判断是否有录音权限
-    private boolean ifHaveRecordPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // 动态申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST_CODE);
-            return false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        XXPermissions.with(this)
+                .permission(Permission.RECORD_AUDIO)
+                // 设置权限请求拦截器（局部设置）
+                //.interceptor(new PermissionInterceptor())
+                // 设置不触发错误检测机制（局部设置）
+                //.unchecked()
+                .request(new OnPermissionCallback() {
+
+                    @Override
+                    public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                        if (!allGranted) {
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+                        showAlertDialog(permissions);
+                    }
+                });
+    }
+
+    private void showAlertDialog(List<String> permissions) {
+        builder.setTitle(getString(R.string.permission_alert_title))
+                .setMessage(getString(R.string.permission_alert_message))
+                .setPositiveButton(getString(R.string.permission_alert_positive), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //跳转应用消息，间接打开应用权限设置-效率高
+                        XXPermissions.startPermissionActivity(MikeTestActivity.this, permissions);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.permission_alert_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog = builder.create();
+        builder.setCancelable(false);
+        alertDialog.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
         }
-        return true;
     }
 
     private void startRecording(String outputFile) {
