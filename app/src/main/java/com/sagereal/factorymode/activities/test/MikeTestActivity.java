@@ -91,7 +91,6 @@ public class MikeTestActivity extends BaseTestActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mike_test);
         initView();
-        initListener();
         builder = new AlertDialog.Builder(this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
@@ -152,6 +151,8 @@ public class MikeTestActivity extends BaseTestActivity {
                     public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
                         if (!allGranted) {
                             return;
+                        } else {
+                            initListener();
                         }
                     }
 
@@ -180,7 +181,7 @@ public class MikeTestActivity extends BaseTestActivity {
                     }
                 });
         alertDialog = builder.create();
-        builder.setCancelable(false);
+        alertDialog.setCancelable(false);
         alertDialog.show();
     }
 

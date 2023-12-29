@@ -18,6 +18,9 @@ public class KeyTestActivity extends BaseTestActivity {
     Button powerButton;
     boolean isTested = false;
     int testedNum = 0;
+    String actionPowerKey = "com.sagereal.factorymode.KeyTestActivity.powerKey";
+    String actionOnStart = "com.sagereal.factorymode.KeyTestActivity.onStart";
+    String actionOnPause = "com.sagereal.factorymode.KeyTestActivity.onPause";
 
     @Override
     public void initView() {
@@ -57,16 +60,24 @@ public class KeyTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_key_test);
         initView();
         initListener();
-
-        //电源键监听
-        final IntentFilter filter = new IntentFilter("com.sgrl.pjj.factorymode.KeyTestActivity_Power");
-        registerReceiver(mBatInfoReceiver, filter);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+        //电源键监听
+        final IntentFilter filter = new IntentFilter(actionPowerKey);
+        registerReceiver(mBatInfoReceiver, filter);
+        Intent intent = new Intent(actionOnStart);
+        sendBroadcast(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         unregisterReceiver(mBatInfoReceiver);
+        Intent intent = new Intent(actionOnPause);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -98,7 +109,7 @@ public class KeyTestActivity extends BaseTestActivity {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             final String action = intent.getAction();
-            if ("com.sgrl.pjj.factorymode.KeyTestActivity_Power".equals(action)) {
+            if (actionPowerKey.equals(action)) {
                 if (powerButton.getVisibility() == View.VISIBLE) {
                     powerButton.setVisibility(View.GONE);
                     testedNum = testedNum + 1;

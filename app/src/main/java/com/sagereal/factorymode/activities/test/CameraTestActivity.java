@@ -46,7 +46,6 @@ public class CameraTestActivity extends BaseTestActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_test);
         initView();
-        initListener();
         builder = new AlertDialog.Builder(this);
     }
 
@@ -101,6 +100,7 @@ public class CameraTestActivity extends BaseTestActivity {
                         if (!allGranted) {
                             return;
                         } else {
+                            initListener();
                             preview = new Preview.Builder()
                                     .build();
                             backCamera = new CameraSelector.Builder()
@@ -148,7 +148,7 @@ public class CameraTestActivity extends BaseTestActivity {
                     }
                 });
         alertDialog = builder.create();
-        builder.setCancelable(false);
+        alertDialog.setCancelable(false);
         alertDialog.show();
     }
 

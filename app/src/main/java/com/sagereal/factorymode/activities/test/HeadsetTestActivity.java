@@ -1,13 +1,11 @@
 package com.sagereal.factorymode.activities.test;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
@@ -104,7 +101,6 @@ public class HeadsetTestActivity extends BaseTestActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_headset_test);
         initView();
-        initListener();
         builder = new AlertDialog.Builder(this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         headphoneReceiver = new HeadphoneReceiver();
@@ -127,6 +123,8 @@ public class HeadsetTestActivity extends BaseTestActivity {
                     public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
                         if (!allGranted) {
                             return;
+                        } else {
+                            initListener();
                         }
                     }
 

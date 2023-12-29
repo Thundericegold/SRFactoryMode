@@ -51,10 +51,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initListener();
-        builder = new AlertDialog.Builder(this);
         phone = getString(R.string.call_number);
-
+        builder = new AlertDialog.Builder(this);
         String deviceName = Build.DEVICE;
         String deviceType = Build.MODEL;
         String androidVersion = Build.VERSION.RELEASE;
@@ -107,8 +105,9 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
                         if (!allGranted) {
-//                            showAlertDialog(permissions);
                             return;
+                        } else {
+                            initListener();
                         }
                     }
 
@@ -137,7 +136,7 @@ public class MainActivity extends BaseActivity {
                     }
                 });
         alertDialog = builder.create();
-        builder.setCancelable(false);
+        alertDialog.setCancelable(false);
         alertDialog.show();
     }
 
