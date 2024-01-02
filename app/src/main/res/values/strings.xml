@@ -21,6 +21,8 @@
     <string name="call_number">tel:112</string>
     <string name="single_test">SINGLE TEST</string>
     <string name="test_report">TEST REPORT</string>
+    <string name="exit">EXIT</string>
+    <string name="screen_off">SCREEN OFF</string>
     <!--endregion-->
 
 

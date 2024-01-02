@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/layoutMain"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -269,6 +270,33 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/test_report"
+                    android:theme="@style/NormalButton" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dimen_main_btn"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/exit"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/exit"
+                    android:theme="@style/NormalButton" />
+
+                <View
+                    android:layout_width="@dimen/dimen_small_spacing"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/screen_off"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/screen_off"
                     android:theme="@style/NormalButton" />
             </LinearLayout>
 

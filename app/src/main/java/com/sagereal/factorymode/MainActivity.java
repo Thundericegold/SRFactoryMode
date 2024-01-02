@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.os.StatFs;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
@@ -30,6 +33,7 @@ import com.sagereal.factorymode.activities.TestReportActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -44,12 +48,13 @@ public class MainActivity extends BaseActivity {
 
     TextView deviceNameTextView, deviceTypeTextView, versionNumberTextView, androidVersionTextView,
             batterySizeTextView, ramTextView, romTextView, screenSizeTextView, screenResolutionTextView;
-    Button cameraButton, dialButton, singleTestButton, testReportButton;
+    Button cameraButton, dialButton, singleTestButton, testReportButton,exitButton,screenOffButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setNavigationBarVisible(true);
         initView();
         phone = getString(R.string.call_number);
         builder = new AlertDialog.Builder(this);
@@ -87,6 +92,27 @@ public class MainActivity extends BaseActivity {
             screenResolution = width + getString(R.string.pixels_x) + height + getString(R.string.pixels);
         }
         screenResolutionTextView.setText(screenResolution);
+    }
+
+    public void setNavigationBarVisible(boolean isHide) {
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions;
+        if (isHide) {
+
+            uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+
+        } else {
+
+            uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
+
+        }
+        decorView.setSystemUiVisibility(uiOptions);
+
     }
 
     @Override
@@ -163,6 +189,8 @@ public class MainActivity extends BaseActivity {
         dialButton = findViewById(R.id.dial);
         singleTestButton = findViewById(R.id.single_test);
         testReportButton = findViewById(R.id.test_report);
+        exitButton = findViewById(R.id.exit);
+        screenOffButton = findViewById(R.id.screen_off);
     }
 
     @Override
@@ -171,6 +199,8 @@ public class MainActivity extends BaseActivity {
         dialButton.setOnClickListener(onClickListener);
         singleTestButton.setOnClickListener(onClickListener);
         testReportButton.setOnClickListener(onClickListener);
+        exitButton.setOnClickListener(onClickListener);
+        screenOffButton.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = view -> {
@@ -185,6 +215,10 @@ public class MainActivity extends BaseActivity {
         } else if (id == R.id.test_report) {
             Intent intent2 = new Intent(MainActivity.this, TestReportActivity.class);
             startActivity(intent2);
+        } else if (id == R.id.exit) {
+            finish();
+        }else if (id == R.id.screen_off) {
+
         }
     };
 
