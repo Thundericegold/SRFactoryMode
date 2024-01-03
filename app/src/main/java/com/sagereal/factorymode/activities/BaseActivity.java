@@ -2,9 +2,12 @@ package com.sagereal.factorymode.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,9 +44,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         //沉浸式状态栏,导航栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black));//设置状态栏颜色
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().setStatusBarColor(getResources().getColor(R.color.black));//设置状态栏颜色
+//        }
+
+        setNavigationBarVisible(true);
     }
 
     //-----------------------防抖start---------------------------
@@ -70,5 +75,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 //-----------------------防抖end---------------------------
+
+    public void setNavigationBarVisible(boolean isHide) {
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions;
+        if (isHide) {
+
+            uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+
+        } else {
+
+            uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
+
+        }
+        decorView.setSystemUiVisibility(uiOptions);
+
+
+    }
 
 }

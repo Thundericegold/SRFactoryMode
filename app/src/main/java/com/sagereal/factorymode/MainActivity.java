@@ -8,12 +8,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.os.StatFs;
-import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
@@ -33,7 +30,6 @@ import com.sagereal.factorymode.activities.TestReportActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -48,13 +44,12 @@ public class MainActivity extends BaseActivity {
 
     TextView deviceNameTextView, deviceTypeTextView, versionNumberTextView, androidVersionTextView,
             batterySizeTextView, ramTextView, romTextView, screenSizeTextView, screenResolutionTextView;
-    Button cameraButton, dialButton, singleTestButton, testReportButton,exitButton,screenOffButton;
+    Button cameraButton, dialButton, singleTestButton, testReportButton, exitButton, screenOffButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setNavigationBarVisible(true);
         initView();
         phone = getString(R.string.call_number);
         builder = new AlertDialog.Builder(this);
@@ -94,26 +89,7 @@ public class MainActivity extends BaseActivity {
         screenResolutionTextView.setText(screenResolution);
     }
 
-    public void setNavigationBarVisible(boolean isHide) {
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions;
-        if (isHide) {
-
-            uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-
-        } else {
-
-            uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
-
-        }
-        decorView.setSystemUiVisibility(uiOptions);
-
-    }
 
     @Override
     protected void onStart() {
@@ -217,7 +193,7 @@ public class MainActivity extends BaseActivity {
             startActivity(intent2);
         } else if (id == R.id.exit) {
             finish();
-        }else if (id == R.id.screen_off) {
+        } else if (id == R.id.screen_off) {
 
         }
     };
