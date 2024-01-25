@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //沉浸式状态栏,导航栏
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

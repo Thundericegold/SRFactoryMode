@@ -75,6 +75,7 @@
     <string name="mike_test_tip_2">Please speak</string>
     <string name="mike_test_tip_3">The recording is finished, and the recording is playing</string>
     <string name="mike_test_tip_4">Test completed, recording and playback completed</string>
+    <string name="mike_test_tip_5">Test failed, please retest</string>
     <string name="mike_test_btn_1">RECORDING</string>
     <string name="mike_test_btn_2">Testing in progress</string>
     <string name="mike_test_btn_3">RETEST</string>
@@ -83,6 +84,7 @@
     <string name="headset_test_toast_1">Plug headset</string>
     <string name="headset_test_toast_2">Unplug headset</string>
     <string name="headset_test_toast_3">Please insert the headset first</string>
+    <string name="headset_test_toast_4">Headset removed during recording, please retest</string>
     <!--endregion-->
 
     <!--region LCD Test-->

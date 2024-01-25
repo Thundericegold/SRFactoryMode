@@ -75,6 +75,7 @@
     <string name="mike_test_tip_2">录音中，请说话...</string>
     <string name="mike_test_tip_3">录音完成，播放录音中...</string>
     <string name="mike_test_tip_4">测试完成，已完成录音和播放...</string>
+    <string name="mike_test_tip_5">测试失败，请重测...</string>
     <string name="mike_test_btn_1">录音</string>
     <string name="mike_test_btn_2">测试中</string>
     <string name="mike_test_btn_3">重测</string>
@@ -82,6 +83,7 @@
     <string name="headset_test_toast_1">耳机插入</string>
     <string name="headset_test_toast_2">耳机拔出</string>
     <string name="headset_test_toast_3">请先插入耳机...</string>
+    <string name="headset_test_toast_4">录音中耳机拔出，请重测</string>
     <!--endregion-->
 
     <!--region LCD Test-->

@@ -40,7 +40,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
     private MediaRecorder mediaRecorder;
     private HeadphoneReceiver headphoneReceiver;
     private int state = 0;
-    boolean isTested = false;
+    boolean isTested,isRecording,isFailed = false;
 
     @Override
     public void initView() {
@@ -173,8 +173,10 @@ public class HeadsetTestActivity extends BaseTestActivity {
 
     private void test() {
         isTested = false;
+        isFailed = false;
         String outputPath = getExternalFilesDir(null).getAbsolutePath() + "/headsetTest.3gp";
         startRecording(outputPath);
+        isRecording = true;
         tipsTextView.setText(R.string.mike_test_tip_2);
         testButton.setVisibility(View.GONE);
         retestButton.setVisibility(View.GONE);
@@ -183,31 +185,34 @@ public class HeadsetTestActivity extends BaseTestActivity {
         Handler handler1 = new Handler();
         // 创建一个Runnable对象
         Runnable task1 = () -> {
-            // 执行某个任务
-            stopRecording();
-            tipsTextView.setText(R.string.mike_test_tip_3);
-            try {
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setDataSource(HeadsetTestActivity.this, Uri.parse(outputPath));
-                audioManager.setMode(AudioManager.MODE_IN_CALL);
-                audioManager.setSpeakerphoneOn(false);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!isFailed) {
+                // 执行某个任务
+                stopRecording();
+                isRecording = false;
+                tipsTextView.setText(R.string.mike_test_tip_3);
+                try {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(HeadsetTestActivity.this, Uri.parse(outputPath));
+                    audioManager.setMode(AudioManager.MODE_IN_CALL);
+                    audioManager.setSpeakerphoneOn(false);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Handler handler2 = new Handler();
+                Runnable task2 = () -> {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    audioManager.setMode(AudioManager.MODE_NORMAL);
+                    tipsTextView.setText(R.string.mike_test_tip_4);
+                    testingButton.setVisibility(View.GONE);
+                    retestButton.setVisibility(View.VISIBLE);
+                    isTested = true;
+                };
+                handler2.postDelayed(task2, 5000);
             }
-            Handler handler2 = new Handler();
-            Runnable task2 = () -> {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-                audioManager.setMode(AudioManager.MODE_NORMAL);
-                tipsTextView.setText(R.string.mike_test_tip_4);
-                testingButton.setVisibility(View.GONE);
-                retestButton.setVisibility(View.VISIBLE);
-                isTested = true;
-            };
-            handler2.postDelayed(task2, 5000);
         };
         handler1.postDelayed(task1, 5000);
     }
@@ -220,7 +225,12 @@ public class HeadsetTestActivity extends BaseTestActivity {
                 state = intent.getIntExtra("state", -1);
                 if (state == 0) {
                     //耳机拔出
-                    Toast.makeText(context, getString(R.string.headset_test_toast_2), Toast.LENGTH_SHORT).show();
+                    if (isRecording){
+                        Toast.makeText(context, getString(R.string.headset_test_toast_4), Toast.LENGTH_SHORT).show();
+                        recordeFail();
+                    }else{
+                        Toast.makeText(context, getString(R.string.headset_test_toast_2), Toast.LENGTH_SHORT).show();
+                    }
                 } else if (state == 1) {
                     //耳机插入
                     Toast.makeText(context, getString(R.string.headset_test_toast_1), Toast.LENGTH_SHORT).show();
@@ -250,5 +260,23 @@ public class HeadsetTestActivity extends BaseTestActivity {
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
+    }
+
+    private void recordeFail() {
+        isFailed = true;
+        try {
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
+                audioManager.setMode(AudioManager.MODE_NORMAL);
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+        tipsTextView.setText(R.string.mike_test_tip_5);
+        testingButton.setVisibility(View.GONE);
+        retestButton.setVisibility(View.VISIBLE);
     }
 }

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.os.StatFs;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -34,11 +35,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-
-    private long lastBackDownTime;
+    String phone,deviceName,deviceType,androidVersion,versionNumber,batterySize,screenSizeResult,screenResolution = "";
+    long lastBackDownTime;
     double batteryCapacity;
-    private String phone;
-
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
 
@@ -51,30 +50,20 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initData();
+    }
+
+    private void initData() {
         phone = getString(R.string.call_number);
-        builder = new AlertDialog.Builder(this);
-        String deviceName = Build.DEVICE;
-        String deviceType = Build.MODEL;
-        String androidVersion = Build.VERSION.RELEASE;
-        String versionNumber = Build.DISPLAY;
-
-        deviceNameTextView.setText(deviceName);
-        deviceTypeTextView.setText(deviceType);
-        versionNumberTextView.setText(versionNumber);
-        androidVersionTextView.setText(androidVersion);
-        ramTextView.setText(getTotalRam());
-        romTextView.setText(getTotalRom());
-
-        DecimalFormat decimalFormat = new DecimalFormat("#");
-        String result = decimalFormat.format(getBatteryTotal(MainActivity.this)) + getString(R.string.mah);
-        batterySizeTextView.setText(result);
-
+        deviceName = Build.DEVICE;
+        deviceType = Build.MODEL;
+        androidVersion = Build.VERSION.RELEASE;
+        versionNumber = Build.DISPLAY;
+        DecimalFormat decimalFormat1 = new DecimalFormat("#");
+        batterySize = decimalFormat1.format(getBatteryTotal(MainActivity.this)) + getString(R.string.mah);
+        DecimalFormat decimalFormat2 = new DecimalFormat("#.##");
         double screenSize = getScreenSize(MainActivity.this);
-
-        decimalFormat = new DecimalFormat("#.##");
-        screenSizeTextView.setText(String.format("%s%s", decimalFormat.format(screenSize), getString(R.string.inches)));
-
-        String screenResolution;
+        screenSizeResult = String.format("%s%s", decimalFormat2.format(screenSize), getString(R.string.inches));
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             WindowMetrics currentWindowMetrics = wm.getCurrentWindowMetrics();
@@ -86,22 +75,26 @@ public class MainActivity extends BaseActivity {
             int height = wm.getDefaultDisplay().getHeight();
             screenResolution = width + getString(R.string.pixels_x) + height + getString(R.string.pixels);
         }
+
+        deviceNameTextView.setText(deviceName);
+        deviceTypeTextView.setText(deviceType);
+        versionNumberTextView.setText(versionNumber);
+        androidVersionTextView.setText(androidVersion);
+        ramTextView.setText(getTotalRam());
+        romTextView.setText(getTotalRom());
+        batterySizeTextView.setText(batterySize);
+        screenSizeTextView.setText(screenSizeResult);
         screenResolutionTextView.setText(screenResolution);
     }
-
-
 
     @Override
     protected void onStart() {
         super.onStart();
+        builder = new AlertDialog.Builder(this);
         XXPermissions.with(this)
                 .permission(Permission.RECORD_AUDIO)
                 .permission(Permission.CAMERA)
                 .permission(Permission.CALL_PHONE)
-                // 设置权限请求拦截器（局部设置）
-                //.interceptor(new PermissionInterceptor())
-                // 设置不触发错误检测机制（局部设置）
-                //.unchecked()
                 .request(new OnPermissionCallback() {
 
                     @Override
@@ -194,7 +187,7 @@ public class MainActivity extends BaseActivity {
         } else if (id == R.id.exit) {
             finish();
         } else if (id == R.id.screen_off) {
-
+            screenOff();
         }
     };
 
@@ -279,7 +272,7 @@ public class MainActivity extends BaseActivity {
         return displayRomSize[i] + getString(R.string.gb);
     }
 
-    public double getBatteryTotal(Context context) {
+    private double getBatteryTotal(Context context) {
         if (batteryCapacity > 0) {
             return batteryCapacity;
         }
@@ -294,7 +287,7 @@ public class MainActivity extends BaseActivity {
         return batteryCapacity;
     }
 
-    public static double getScreenSize(Context context) {
+    private double getScreenSize(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics realDisplayMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getRealMetrics(realDisplayMetrics);
@@ -306,5 +299,9 @@ public class MainActivity extends BaseActivity {
         double y = Math.pow(heightPixels / realDisplayMetrics.ydpi, 2);
 
         return Math.sqrt(x + y);
+    }
+
+    private void screenOff(){
+
     }
 }
