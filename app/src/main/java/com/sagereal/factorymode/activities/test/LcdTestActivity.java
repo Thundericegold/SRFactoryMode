@@ -32,13 +32,11 @@ public class LcdTestActivity extends BaseTestActivity {
             if (isTested) {
                 editor.putInt(STATUS_LCD, 0);
                 editor.commit();
-                setResult(RESULT_PASS);
                 finish();
             }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_LCD, 1);
             editor.commit();
-            setResult(RESULT_FAIL);
             finish();
         } else if (id == R.id.lcd_layout) {
             if (status == 0) {

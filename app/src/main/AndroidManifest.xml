@@ -84,15 +84,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.test.CameraTestOldActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.test.ReceiverTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false">

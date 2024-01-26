@@ -15,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sagereal.factorymode.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    public final int RESULT_PASS = 1111;
-    public final int RESULT_FAIL = 2222;
-
     public final String STATUS_BATTERY = "battery_status";
     public final String STATUS_VIBRATION = "vibration_status";
     public final String STATUS_MIKE = "mike_status";
@@ -28,14 +25,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final String STATUS_CAMERA = "camera_status";
     public final String STATUS_FLASH = "flash_status";
     public final String STATUS_KEY = "key_status";
-
-    public abstract void initView();
-
-    public abstract void initListener();
-
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
     public final static String SHARED_PREFERENCES_NAME = "MySharedPreferences";
+
+    public abstract void initView();
+    public abstract void initListener();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,12 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        //沉浸式状态栏,导航栏
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getWindow().setStatusBarColor(getResources().getColor(R.color.black));//设置状态栏颜色
-//        }
-
         setNavigationBarVisible(true);
     }
 
@@ -77,8 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 //-----------------------防抖end---------------------------
 
-    public void setNavigationBarVisible(boolean isHide) {
-
+    private void setNavigationBarVisible(boolean isHide) {
         View decorView = getWindow().getDecorView();
         int uiOptions;
         if (isHide) {
@@ -95,8 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         }
         decorView.setSystemUiVisibility(uiOptions);
-
-
     }
 
 }

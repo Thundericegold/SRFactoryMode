@@ -34,12 +34,10 @@ public class ReceiverTestActivity extends BaseTestActivity {
             if (id == R.id.pass) {
                 editor.putInt(STATUS_RECEIVER, 0);
                 editor.commit();
-                setResult(RESULT_PASS);
                 finish();
             } else if (id == R.id.fail) {
                 editor.putInt(STATUS_RECEIVER, 1);
                 editor.commit();
-                setResult(RESULT_FAIL);
                 finish();
             }
         }

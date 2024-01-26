@@ -20,12 +20,9 @@ public class BatteryTestActivity extends BaseTestActivity {
     private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-
             boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                     status == BatteryManager.BATTERY_STATUS_FULL;
-
             if (isCharging) {
                 chargingStatusTextView.setText(getString(R.string.charging));
             } else {
@@ -37,17 +34,14 @@ public class BatteryTestActivity extends BaseTestActivity {
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
             float batteryPct = level / (float) scale;
             float p = batteryPct * 100;
-
             currentElectricityTextView.setText(Math.round(p) + getString(R.string.electricity_unit));
 
             // 获取电池电压
             int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-
             batteryVoltageTextView.setText(voltage + getString(R.string.voltage_unit));
 
             // 获取电池温度
             int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
-
             batteryTemperatureTextView.setText(temperature + getString(R.string.centigrade));
         }
     };
@@ -85,12 +79,10 @@ public class BatteryTestActivity extends BaseTestActivity {
         if (id == R.id.pass) {
             editor.putInt(STATUS_BATTERY, 0);
             editor.commit();
-            setResult(RESULT_PASS);
             finish();
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_BATTERY, 1);
             editor.commit();
-            setResult(RESULT_FAIL);
             finish();
         }
     };

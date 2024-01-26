@@ -67,7 +67,6 @@ public class MikeTestActivity extends BaseTestActivity {
                     }
                     editor.putInt(STATUS_MIKE, 0);
                     editor.commit();
-                    setResult(RESULT_PASS);
                     finish();
                 }
             } else if (id == R.id.fail) {
@@ -78,7 +77,6 @@ public class MikeTestActivity extends BaseTestActivity {
                 }
                 editor.putInt(STATUS_MIKE, 1);
                 editor.commit();
-                setResult(RESULT_FAIL);
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {
                 record();
@@ -132,7 +130,6 @@ public class MikeTestActivity extends BaseTestActivity {
             handler2.postDelayed(task2, 5000);
         };
         handler1.postDelayed(task1, 5000);
-
     }
 
 
@@ -141,10 +138,6 @@ public class MikeTestActivity extends BaseTestActivity {
         super.onStart();
         XXPermissions.with(this)
                 .permission(Permission.RECORD_AUDIO)
-                // 设置权限请求拦截器（局部设置）
-                //.interceptor(new PermissionInterceptor())
-                // 设置不触发错误检测机制（局部设置）
-                //.unchecked()
                 .request(new OnPermissionCallback() {
 
                     @Override

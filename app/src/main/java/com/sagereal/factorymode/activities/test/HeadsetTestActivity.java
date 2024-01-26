@@ -73,7 +73,6 @@ public class HeadsetTestActivity extends BaseTestActivity {
                     }
                     editor.putInt(STATUS_HEADSET, 0);
                     editor.commit();
-                    setResult(RESULT_PASS);
                     finish();
                 }
             } else if (id == R.id.fail) {
@@ -84,7 +83,6 @@ public class HeadsetTestActivity extends BaseTestActivity {
                 }
                 editor.putInt(STATUS_HEADSET, 1);
                 editor.commit();
-                setResult(RESULT_FAIL);
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {
                 if (state == 1) {
@@ -113,10 +111,6 @@ public class HeadsetTestActivity extends BaseTestActivity {
         super.onStart();
         XXPermissions.with(this)
                 .permission(Permission.RECORD_AUDIO)
-                // 设置权限请求拦截器（局部设置）
-                //.interceptor(new PermissionInterceptor())
-                // 设置不触发错误检测机制（局部设置）
-                //.unchecked()
                 .request(new OnPermissionCallback() {
 
                     @Override

@@ -41,12 +41,8 @@ public class FlashTestActivity extends BaseTestActivity {
                 try {
                     if (isTorchOn) {
                         turnOffFlashLight();
-                        isTorchOn = false;
-                        toggleButton.setText(R.string.flashlight_turn_on);
                     } else {
                         turnOnFlashLight();
-                        isTorchOn = true;
-                        toggleButton.setText(R.string.flashlight_turn_off);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -54,12 +50,10 @@ public class FlashTestActivity extends BaseTestActivity {
             } else if (id == R.id.pass) {
                 editor.putInt(STATUS_FLASH, 0);
                 editor.commit();
-                setResult(RESULT_PASS);
                 finish();
             } else if (id == R.id.fail) {
                 editor.putInt(STATUS_FLASH, 1);
                 editor.commit();
-                setResult(RESULT_FAIL);
                 finish();
             }
         }
@@ -71,7 +65,11 @@ public class FlashTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_flash_test);
         initView();
         initListener();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         boolean isFlashAvailable = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!isFlashAvailable) {
@@ -100,14 +98,19 @@ public class FlashTestActivity extends BaseTestActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
+        if (isTorchOn) {
+            turnOffFlashLight();
+        }
     }
 
     public void turnOnFlashLight() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mCameraManager.setTorchMode(mCameraId, true);
+                isTorchOn = true;
+                toggleButton.setText(R.string.flashlight_turn_off);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,34 +121,12 @@ public class FlashTestActivity extends BaseTestActivity {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mCameraManager.setTorchMode(mCameraId, false);
+                isTorchOn = false;
+                toggleButton.setText(R.string.flashlight_turn_on);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (isTorchOn) {
-            turnOffFlashLight();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (isTorchOn) {
-            turnOffFlashLight();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isTorchOn) {
-            turnOnFlashLight();
         }
     }
 }

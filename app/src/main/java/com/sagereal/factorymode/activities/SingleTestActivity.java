@@ -48,7 +48,6 @@ public class SingleTestActivity extends BaseActivity {
 
     Map<Integer, Integer> statusList = new HashMap<Integer, Integer>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +57,9 @@ public class SingleTestActivity extends BaseActivity {
         initStatus();
 
         final String[] testArrays = getResources().getStringArray(R.array.test_array);
-
-        //设置线性布局LinearLayoutManager,也可以是GridLayoutManager(网格布局),StaggeredGridLayoutManager(瀑布流)
+        //设置线性布局LinearLayoutManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(SingleTestActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration divider = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerView.addItemDecoration(divider);
         //设置适配器
@@ -169,10 +166,9 @@ public class SingleTestActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        int status = sharedPreferences.getInt(STATUS_BATTERY, -1);
         switch (requestCode) {
             case REQUEST_BATTERY:
-                updateStatus(0, status);
+                updateStatus(0, sharedPreferences.getInt(STATUS_BATTERY, -1));
                 break;
             case REQUEST_VIBRATION:
                 updateStatus(1, sharedPreferences.getInt(STATUS_VIBRATION, -1));

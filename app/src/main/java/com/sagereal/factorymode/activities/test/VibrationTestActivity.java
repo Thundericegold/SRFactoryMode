@@ -27,16 +27,12 @@ public class VibrationTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            stopVibrating();
             editor.putInt(STATUS_VIBRATION, 0);
             editor.commit();
-            setResult(RESULT_PASS);
             finish();
         } else if (id == R.id.fail) {
-            stopVibrating();
             editor.putInt(STATUS_VIBRATION, 1);
             editor.commit();
-            setResult(RESULT_FAIL);
             finish();
         }
     };
@@ -47,8 +43,20 @@ public class VibrationTestActivity extends BaseTestActivity {
         setContentView(R.layout.activity_vibration_test);
         initView();
         initListener();
-        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         startVibrating();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopVibrating();
     }
 
     void startVibrating() {

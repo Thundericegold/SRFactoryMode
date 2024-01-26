@@ -73,13 +73,11 @@ public class CameraTestActivity extends BaseTestActivity {
             if (isTested) {
                 editor.putInt(STATUS_CAMERA, 0);
                 editor.commit();
-                setResult(RESULT_PASS);
                 finish();
             }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_CAMERA, 1);
             editor.commit();
-            setResult(RESULT_FAIL);
             finish();
         }
     };
@@ -89,10 +87,6 @@ public class CameraTestActivity extends BaseTestActivity {
         super.onStart();
         XXPermissions.with(this)
                 .permission(Permission.CAMERA)
-                // 设置权限请求拦截器（局部设置）
-                //.interceptor(new PermissionInterceptor())
-                // 设置不触发错误检测机制（局部设置）
-                //.unchecked()
                 .request(new OnPermissionCallback() {
 
                     @Override
@@ -175,9 +169,7 @@ public class CameraTestActivity extends BaseTestActivity {
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider, Preview preview, CameraSelector cameraSelector) {
         //解除所有绑定，防止CameraProvider重复绑定到Lifecycle发生异常
         cameraProvider.unbindAll();
-
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
         camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview);
     }
 }
