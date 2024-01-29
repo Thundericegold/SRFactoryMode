@@ -71,7 +71,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
                         mediaPlayer = null;
                         audioManager.setMode(AudioManager.MODE_NORMAL);
                     }
-                    editor.putInt(STATUS_HEADSET, 0);
+                    editor.putInt(STATUS_HEADSET, VALUE_PASS);
                     editor.commit();
                     finish();
                 }
@@ -81,7 +81,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
                     mediaPlayer = null;
                     audioManager.setMode(AudioManager.MODE_NORMAL);
                 }
-                editor.putInt(STATUS_HEADSET, 1);
+                editor.putInt(STATUS_HEADSET, VALUE_FAIL);
                 editor.commit();
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {

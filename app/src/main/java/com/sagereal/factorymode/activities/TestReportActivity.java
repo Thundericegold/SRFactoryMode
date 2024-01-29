@@ -64,16 +64,16 @@ public class TestReportActivity extends BaseActivity {
         testArrays = getResources().getStringArray(R.array.test_array);
         statusList = new HashMap<Integer, Integer>();
 
-        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY, -1);
-        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION, -1);
-        mikeStatus = sharedPreferences.getInt(STATUS_MIKE, -1);
-        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET, -1);
-        lcdStatus = sharedPreferences.getInt(STATUS_LCD, -1);
-        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER, -1);
-        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER, -1);
-        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA, -1);
-        flashStatus = sharedPreferences.getInt(STATUS_FLASH, -1);
-        keyStatus = sharedPreferences.getInt(STATUS_KEY, -1);
+        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY, VALUE_DEFAULT);
+        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION, VALUE_DEFAULT);
+        mikeStatus = sharedPreferences.getInt(STATUS_MIKE, VALUE_DEFAULT);
+        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET, VALUE_DEFAULT);
+        lcdStatus = sharedPreferences.getInt(STATUS_LCD, VALUE_DEFAULT);
+        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER, VALUE_DEFAULT);
+        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER, VALUE_DEFAULT);
+        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA, VALUE_DEFAULT);
+        flashStatus = sharedPreferences.getInt(STATUS_FLASH, VALUE_DEFAULT);
+        keyStatus = sharedPreferences.getInt(STATUS_KEY, VALUE_DEFAULT);
 
         statusList.put(0, batteryStatus);
         statusList.put(1, vibrationStatus);
@@ -88,7 +88,7 @@ public class TestReportActivity extends BaseActivity {
 
         for (int i = 0; i <= 9; i++) {
             switch (statusList.get(i)) {
-                case -1:
+                case VALUE_DEFAULT:
                     untestedList.add(testArrays[i]);
                     break;
                 case 0:

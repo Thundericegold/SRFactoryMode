@@ -48,11 +48,11 @@ public class FlashTestActivity extends BaseTestActivity {
                     e.printStackTrace();
                 }
             } else if (id == R.id.pass) {
-                editor.putInt(STATUS_FLASH, 0);
+                editor.putInt(STATUS_FLASH, VALUE_PASS);
                 editor.commit();
                 finish();
             } else if (id == R.id.fail) {
-                editor.putInt(STATUS_FLASH, 1);
+                editor.putInt(STATUS_FLASH, VALUE_FAIL);
                 editor.commit();
                 finish();
             }

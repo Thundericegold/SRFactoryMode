@@ -71,12 +71,12 @@ public class CameraTestActivity extends BaseTestActivity {
             isTested = true;
         } else if (id == R.id.pass) {
             if (isTested) {
-                editor.putInt(STATUS_CAMERA, 0);
+                editor.putInt(STATUS_CAMERA, VALUE_PASS);
                 editor.commit();
                 finish();
             }
         } else if (id == R.id.fail) {
-            editor.putInt(STATUS_CAMERA, 1);
+            editor.putInt(STATUS_CAMERA, VALUE_FAIL);
             editor.commit();
             finish();
         }
@@ -108,7 +108,9 @@ public class CameraTestActivity extends BaseTestActivity {
                             cameraProviderListenableFuture.addListener(() -> {
                                 try {
                                     cameraProvider = cameraProviderListenableFuture.get();
+                                    mCameraId = "0";
                                     bindPreview(cameraProvider, preview, backCamera);
+                                    toggleButton.setText(R.string.camera_proactive);
                                 } catch (ExecutionException | InterruptedException e) {
                                     // No errors need to be handled for this Future.
                                     // This should never be reached.
@@ -154,7 +156,7 @@ public class CameraTestActivity extends BaseTestActivity {
         }
     }
 
-    public void switchCamera() {
+     void switchCamera() {
         if (mCameraId.equals("0")) {
             mCameraId = "1";
             bindPreview(cameraProvider, preview, frontCamera);

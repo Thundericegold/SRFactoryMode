@@ -60,22 +60,12 @@ public class MikeTestActivity extends BaseTestActivity {
             int id = v.getId();
             if (id == R.id.pass) {
                 if (isTested) {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        audioManager.setMode(AudioManager.MODE_NORMAL);
-                    }
-                    editor.putInt(STATUS_MIKE, 0);
+                    editor.putInt(STATUS_MIKE, VALUE_PASS);
                     editor.commit();
                     finish();
                 }
             } else if (id == R.id.fail) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
-                }
-                editor.putInt(STATUS_MIKE, 1);
+                editor.putInt(STATUS_MIKE, VALUE_FAIL);
                 editor.commit();
                 finish();
             } else if (id == R.id.test_btn || id == R.id.retest_btn) {
@@ -91,6 +81,16 @@ public class MikeTestActivity extends BaseTestActivity {
         initView();
         builder = new AlertDialog.Builder(this);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+            audioManager.setMode(AudioManager.MODE_NORMAL);
+        }
     }
 
     private void record() {
@@ -131,7 +131,6 @@ public class MikeTestActivity extends BaseTestActivity {
         };
         handler1.postDelayed(task1, 5000);
     }
-
 
     @Override
     protected void onStart() {

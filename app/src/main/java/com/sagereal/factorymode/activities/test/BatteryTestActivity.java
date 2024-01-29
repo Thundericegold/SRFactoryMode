@@ -20,7 +20,7 @@ public class BatteryTestActivity extends BaseTestActivity {
     private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, VALUE_DEFAULT);
             boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                     status == BatteryManager.BATTERY_STATUS_FULL;
             if (isCharging) {
@@ -30,18 +30,18 @@ public class BatteryTestActivity extends BaseTestActivity {
             }
 
             // 获取当前电量
-            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-            int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, VALUE_DEFAULT);
+            int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, VALUE_DEFAULT);
             float batteryPct = level / (float) scale;
             float p = batteryPct * 100;
             currentElectricityTextView.setText(Math.round(p) + getString(R.string.electricity_unit));
 
             // 获取电池电压
-            int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+            int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, VALUE_DEFAULT);
             batteryVoltageTextView.setText(voltage + getString(R.string.voltage_unit));
 
             // 获取电池温度
-            int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
+            int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, VALUE_DEFAULT) / 10;
             batteryTemperatureTextView.setText(temperature + getString(R.string.centigrade));
         }
     };
@@ -77,11 +77,11 @@ public class BatteryTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            editor.putInt(STATUS_BATTERY, 0);
+            editor.putInt(STATUS_BATTERY, VALUE_PASS);
             editor.commit();
             finish();
         } else if (id == R.id.fail) {
-            editor.putInt(STATUS_BATTERY, 1);
+            editor.putInt(STATUS_BATTERY, VALUE_FAIL);
             editor.commit();
             finish();
         }

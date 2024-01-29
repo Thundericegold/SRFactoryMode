@@ -32,11 +32,11 @@ public class ReceiverTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                editor.putInt(STATUS_RECEIVER, 0);
+                editor.putInt(STATUS_RECEIVER, VALUE_PASS);
                 editor.commit();
                 finish();
             } else if (id == R.id.fail) {
-                editor.putInt(STATUS_RECEIVER, 1);
+                editor.putInt(STATUS_RECEIVER, VALUE_FAIL);
                 editor.commit();
                 finish();
             }

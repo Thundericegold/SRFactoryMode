@@ -25,6 +25,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final String STATUS_CAMERA = "camera_status";
     public final String STATUS_FLASH = "flash_status";
     public final String STATUS_KEY = "key_status";
+    public final int VALUE_DEFAULT = -1;
+    public final int VALUE_PASS = 0;
+    public final int VALUE_FAIL = 1;
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
     public final static String SHARED_PREFERENCES_NAME = "MySharedPreferences";

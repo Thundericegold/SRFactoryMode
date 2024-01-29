@@ -30,15 +30,15 @@ public class LcdTestActivity extends BaseTestActivity {
         int id = v.getId();
         if (id == R.id.pass) {
             if (isTested) {
-                editor.putInt(STATUS_LCD, 0);
+                editor.putInt(STATUS_LCD, VALUE_PASS);
                 editor.commit();
                 finish();
             }
         } else if (id == R.id.fail) {
-            editor.putInt(STATUS_LCD, 1);
+            editor.putInt(STATUS_LCD, VALUE_FAIL);
             editor.commit();
             finish();
-        } else if (id == R.id.lcd_layout) {
+        } else if (id == R.id.lcd_layout && !isTested) {
             if (status == 0) {
                 lcdLayout.setBackgroundColor(getColor(R.color.green));
                 status = 1;

@@ -28,11 +28,11 @@ public class SpeakerTestActivity extends BaseTestActivity {
         public void onClick(View v) {
             int id = v.getId();
             if (id == R.id.pass) {
-                editor.putInt(STATUS_SPEAKER, 0);
+                editor.putInt(STATUS_SPEAKER, VALUE_PASS);
                 editor.commit();
                 finish();
             } else if (id == R.id.fail) {
-                editor.putInt(STATUS_SPEAKER, 1);
+                editor.putInt(STATUS_SPEAKER, VALUE_FAIL);
                 editor.commit();
                 finish();
             }

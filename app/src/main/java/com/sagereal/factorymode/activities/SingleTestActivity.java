@@ -79,16 +79,16 @@ public class SingleTestActivity extends BaseActivity {
     }
 
     private void initStatus() {
-        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY, -1);
-        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION, -1);
-        mikeStatus = sharedPreferences.getInt(STATUS_MIKE, -1);
-        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET, -1);
-        lcdStatus = sharedPreferences.getInt(STATUS_LCD, -1);
-        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER, -1);
-        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER, -1);
-        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA, -1);
-        flashStatus = sharedPreferences.getInt(STATUS_FLASH, -1);
-        keyStatus = sharedPreferences.getInt(STATUS_KEY, -1);
+        batteryStatus = sharedPreferences.getInt(STATUS_BATTERY, VALUE_DEFAULT);
+        vibrationStatus = sharedPreferences.getInt(STATUS_VIBRATION, VALUE_DEFAULT);
+        mikeStatus = sharedPreferences.getInt(STATUS_MIKE, VALUE_DEFAULT);
+        headsetStatus = sharedPreferences.getInt(STATUS_HEADSET, VALUE_DEFAULT);
+        lcdStatus = sharedPreferences.getInt(STATUS_LCD, VALUE_DEFAULT);
+        speakerStatus = sharedPreferences.getInt(STATUS_SPEAKER, VALUE_DEFAULT);
+        receiverStatus = sharedPreferences.getInt(STATUS_RECEIVER, VALUE_DEFAULT);
+        cameraStatus = sharedPreferences.getInt(STATUS_CAMERA, VALUE_DEFAULT);
+        flashStatus = sharedPreferences.getInt(STATUS_FLASH, VALUE_DEFAULT);
+        keyStatus = sharedPreferences.getInt(STATUS_KEY, VALUE_DEFAULT);
 
         statusList.put(0, batteryStatus);
         statusList.put(1, vibrationStatus);
@@ -168,34 +168,34 @@ public class SingleTestActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_BATTERY:
-                updateStatus(0, sharedPreferences.getInt(STATUS_BATTERY, -1));
+                updateStatus(0, sharedPreferences.getInt(STATUS_BATTERY, VALUE_DEFAULT));
                 break;
             case REQUEST_VIBRATION:
-                updateStatus(1, sharedPreferences.getInt(STATUS_VIBRATION, -1));
+                updateStatus(1, sharedPreferences.getInt(STATUS_VIBRATION, VALUE_DEFAULT));
                 break;
             case REQUEST_MIKE:
-                updateStatus(2, sharedPreferences.getInt(STATUS_MIKE, -1));
+                updateStatus(2, sharedPreferences.getInt(STATUS_MIKE, VALUE_DEFAULT));
                 break;
             case REQUEST_HEADSET:
-                updateStatus(3, sharedPreferences.getInt(STATUS_HEADSET, -1));
+                updateStatus(3, sharedPreferences.getInt(STATUS_HEADSET, VALUE_DEFAULT));
                 break;
             case REQUEST_LCD:
-                updateStatus(4, sharedPreferences.getInt(STATUS_LCD, -1));
+                updateStatus(4, sharedPreferences.getInt(STATUS_LCD, VALUE_DEFAULT));
                 break;
             case REQUEST_SPEAKER:
-                updateStatus(5, sharedPreferences.getInt(STATUS_SPEAKER, -1));
+                updateStatus(5, sharedPreferences.getInt(STATUS_SPEAKER, VALUE_DEFAULT));
                 break;
             case REQUEST_RECEIVER:
-                updateStatus(6, sharedPreferences.getInt(STATUS_RECEIVER, -1));
+                updateStatus(6, sharedPreferences.getInt(STATUS_RECEIVER, VALUE_DEFAULT));
                 break;
             case REQUEST_CAMERA:
-                updateStatus(7, sharedPreferences.getInt(STATUS_CAMERA, -1));
+                updateStatus(7, sharedPreferences.getInt(STATUS_CAMERA, VALUE_DEFAULT));
                 break;
             case REQUEST_FLASH:
-                updateStatus(8, sharedPreferences.getInt(STATUS_FLASH, -1));
+                updateStatus(8, sharedPreferences.getInt(STATUS_FLASH, VALUE_DEFAULT));
                 break;
             case REQUEST_KEY:
-                updateStatus(9, sharedPreferences.getInt(STATUS_KEY, -1));
+                updateStatus(9, sharedPreferences.getInt(STATUS_KEY, VALUE_DEFAULT));
                 break;
         }
     }

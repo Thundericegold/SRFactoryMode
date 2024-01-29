@@ -41,12 +41,12 @@ public class KeyTestActivity extends BaseTestActivity {
         int id = v.getId();
         if (id == R.id.pass) {
             if (isTested) {
-                editor.putInt(STATUS_KEY, 0);
+                editor.putInt(STATUS_KEY, VALUE_PASS);
                 editor.commit();
                 finish();
             }
         } else if (id == R.id.fail) {
-            editor.putInt(STATUS_KEY, 1);
+            editor.putInt(STATUS_KEY, VALUE_FAIL);
             editor.commit();
             finish();
         }
