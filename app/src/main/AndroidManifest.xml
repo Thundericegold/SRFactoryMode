@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 存储图像或者视频权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 存储图像或者视频权限 -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -16,7 +17,8 @@
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage" /> <!-- 录制音频权限 -->
+        tools:ignore="ScopedStorage" />
+    <!-- 录制音频权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
@@ -44,7 +46,8 @@
         <activity
             android:name=".activities.test.BatteryTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -60,7 +63,8 @@
         <activity
             android:name=".activities.test.KeyTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -86,7 +90,8 @@
         <activity
             android:name=".activities.test.ReceiverTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -94,7 +99,8 @@
         <activity
             android:name=".activities.test.SpeakerTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -102,7 +108,8 @@
         <activity
             android:name=".activities.test.LcdTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -110,7 +117,8 @@
         <activity
             android:name=".activities.test.HeadsetTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -118,7 +126,8 @@
         <activity
             android:name=".activities.test.MikeTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -126,7 +135,8 @@
         <activity
             android:name=".activities.test.VibrationTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -134,7 +144,8 @@
         <activity
             android:name=".activities.TestReportActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -142,7 +153,8 @@
         <activity
             android:name=".activities.SingleTestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -150,7 +162,8 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

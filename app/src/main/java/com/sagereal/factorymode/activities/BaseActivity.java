@@ -73,17 +73,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         int uiOptions;
         if (isHide) {
-
             uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
-
         } else {
-
             uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
-
         }
         decorView.setSystemUiVisibility(uiOptions);
     }
