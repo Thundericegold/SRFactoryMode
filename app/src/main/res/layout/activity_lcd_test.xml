@@ -6,68 +6,129 @@
     android:orientation="vertical"
     tools:context=".activities.test.LcdTestActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
+        android:id="@+id/start_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_appbar_height"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/dimen_small_spacing"
-        android:background="@color/black">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/blue"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/red"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/green"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/start_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lcd_test"
-            android:textSize="@dimen/dimen_appbar_text"
-            android:textColor="@color/white" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dimen_middle_spacing"
+            android:layout_marginTop="@dimen/dimen_middle_spacing"
+            android:minHeight="@dimen/dimen_main_btn"
+            android:text="开始测试"
+            android:theme="@style/NormalButton" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/lcd_layout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:paddingEnd="@dimen/dimen_small_spacing"
-        android:background="@color/red"
+        android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/dimen_test_text_height"
-            android:text="@string/lCD_test_tip"
-            android:theme="@style/testText" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/end_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_state_height"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_small_spacing"
-        android:paddingRight="@dimen/dimen_small_spacing"
-        android:gravity="bottom"
-        android:paddingBottom="@dimen/dimen_middle_spacing">
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_appbar_height"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_small_spacing"
+            android:background="@color/black">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lcd_test"
+                android:textSize="@dimen/dimen_appbar_text"
+                android:textColor="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <Button
-            android:id="@+id/pass"
-            android:layout_width="@dimen/dimen_0"
+            android:id="@+id/retest_btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/bar"
+            android:layout_marginTop="@dimen/dimen_middle_spacing"
+            android:layout_marginStart="@dimen/dimen_small_spacing"
+            android:layout_marginEnd="@dimen/dimen_small_spacing"
             android:minHeight="@dimen/dimen_main_btn"
-            android:layout_weight="1"
-            android:text="@string/pass"
+            android:text="重测"
             android:theme="@style/NormalButton" />
 
-        <View
-            android:layout_width="@dimen/dimen_small_spacing"
-            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_state_height"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_small_spacing"
+            android:paddingRight="@dimen/dimen_small_spacing"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/dimen_middle_spacing">
 
-        <Button
-            android:id="@+id/fail"
-            android:layout_width="@dimen/dimen_0"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/dimen_main_btn"
-            android:layout_weight="1"
-            android:text="@string/fail"
-            android:theme="@style/NormalButton" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/pass"
+                android:layout_width="@dimen/dimen_0"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dimen_main_btn"
+                android:layout_weight="1"
+                android:text="@string/pass"
+                android:theme="@style/NormalButton" />
+
+            <View
+                android:layout_width="@dimen/dimen_small_spacing"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/fail"
+                android:layout_width="@dimen/dimen_0"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dimen_main_btn"
+                android:layout_weight="1"
+                android:text="@string/fail"
+                android:theme="@style/NormalButton" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </LinearLayout>
