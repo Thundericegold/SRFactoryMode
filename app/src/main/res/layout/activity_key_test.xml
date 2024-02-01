@@ -24,6 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_volume_up_spacing"
         android:paddingStart="@dimen/dimen_small_spacing"
         android:paddingEnd="@dimen/dimen_small_spacing"
         android:paddingTop="@dimen/dimen_small_spacing"
@@ -41,6 +42,7 @@
             android:id="@+id/volume_down_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_volume_down_spacing"
             android:minHeight="@dimen/dimen_main_btn"
             android:text="@string/volume_down"
             android:theme="@style/NormalButton" />
@@ -49,6 +51,7 @@
             android:id="@+id/power_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_power_spacing"
             android:minHeight="@dimen/dimen_main_btn"
             android:text="@string/power_key"
             android:theme="@style/NormalButton" />

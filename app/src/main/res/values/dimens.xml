@@ -9,6 +9,9 @@
     <dimen name="dimen_main_btn_text">16sp</dimen>
     <dimen name="dimen_small_spacing">10dp</dimen>
     <dimen name="dimen_middle_spacing">15dp</dimen>
+    <dimen name="dimen_volume_up_spacing">60dp</dimen>
+    <dimen name="dimen_volume_down_spacing">15dp</dimen>
+    <dimen name="dimen_power_spacing">45dp</dimen>
 
     <dimen name="dimen_test_text_height">40dp</dimen>
     <dimen name="dimen_test_text_size">16sp</dimen>

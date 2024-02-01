@@ -82,7 +82,7 @@ public class KeyTestActivity extends BaseTestActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (volumeUpButton.getVisibility() == View.VISIBLE) {
-                volumeUpButton.setVisibility(View.GONE);
+                volumeUpButton.setVisibility(View.INVISIBLE);
                 testedNum = testedNum + 1;
                 if (testedNum == 3) {
                     isTested = true;
@@ -92,7 +92,7 @@ public class KeyTestActivity extends BaseTestActivity {
         }
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (volumeDownButton.getVisibility() == View.VISIBLE) {
-                volumeDownButton.setVisibility(View.GONE);
+                volumeDownButton.setVisibility(View.INVISIBLE);
                 testedNum = testedNum + 1;
                 if (testedNum == 3) {
                     isTested = true;
@@ -109,7 +109,7 @@ public class KeyTestActivity extends BaseTestActivity {
             final String action = intent.getAction();
             if (actionPowerKey.equals(action)) {
                 if (powerButton.getVisibility() == View.VISIBLE) {
-                    powerButton.setVisibility(View.GONE);
+                    powerButton.setVisibility(View.INVISIBLE);
                     testedNum = testedNum + 1;
                     if (testedNum == 3) {
                         isTested = true;
