@@ -16,7 +16,7 @@ import com.sagereal.factorymode.R;
 public class FlashTestActivity extends BaseTestActivity {
     Button toggleButton;
     private CameraManager mCameraManager;
-    private String mCameraId;
+    private String mCameraIdFront,mCameraIdBack;
     private Boolean isTorchOn = true;
 
     @Override
@@ -89,11 +89,6 @@ public class FlashTestActivity extends BaseTestActivity {
         }
 
         mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try {
-            mCameraId = mCameraManager.getCameraIdList()[0];
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
         turnOnFlashLight();
     }
 
@@ -108,7 +103,9 @@ public class FlashTestActivity extends BaseTestActivity {
     public void turnOnFlashLight() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mCameraManager.setTorchMode(mCameraId, true);
+                for (String mCameraId : mCameraManager.getCameraIdList()) {
+                    mCameraManager.setTorchMode(mCameraId, true);
+                }
                 isTorchOn = true;
                 toggleButton.setText(R.string.flashlight_turn_off);
             }
@@ -120,7 +117,9 @@ public class FlashTestActivity extends BaseTestActivity {
     public void turnOffFlashLight() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mCameraManager.setTorchMode(mCameraId, false);
+                for (String mCameraId : mCameraManager.getCameraIdList()) {
+                    mCameraManager.setTorchMode(mCameraId, false);
+                }
                 isTorchOn = false;
                 toggleButton.setText(R.string.flashlight_turn_on);
             }
