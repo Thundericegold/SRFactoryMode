@@ -216,7 +216,7 @@ public class HeadsetTestActivity extends BaseTestActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
-                state = intent.getIntExtra("state", -1);
+                state = intent.getIntExtra("state", VALUE_DEFAULT);
                 if (state == 0) {
                     //耳机拔出
                     if (isRecording){

@@ -92,6 +92,7 @@
 
     <!--region Speaker Test-->
     <string name="speaker_test_tip">喇叭测试中，请关注喇叭是否有声音...</string>
+    <string name="speaker_test_toast_1">请拔出耳机后测试</string>
     <!--endregion-->
 
     <!--region Receiver Test-->

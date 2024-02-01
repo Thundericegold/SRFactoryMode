@@ -83,7 +83,7 @@
 
     <string name="headset_test_toast_1">Plug headset</string>
     <string name="headset_test_toast_2">Unplug headset</string>
-    <string name="headset_test_toast_3">Please insert the headset first</string>
+    <string name="headset_test_toast_3">Please plug the headset first</string>
     <string name="headset_test_toast_4">Headset removed during recording, please retest</string>
     <!--endregion-->
 
@@ -93,6 +93,7 @@
 
     <!--region Speaker Test-->
     <string name="speaker_test_tip">During the speaker test, please pay attention to whether the speaker has sound</string>
+    <string name="speaker_test_toast_1">Please test after unplug headset</string>
     <!--endregion-->
 
     <!--region Receiver Test-->
