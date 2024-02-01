@@ -97,6 +97,7 @@
 
     <!--region Receiver Test-->
     <string name="receiver_test_tip">听筒测试中，请关注听筒是否有声音...</string>
+    <string name="receiver_test_toast_1">请拔出耳机后测试</string>
     <!--endregion-->
 
     <!--region Camera Test-->

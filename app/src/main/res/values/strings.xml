@@ -98,6 +98,7 @@
 
     <!--region Receiver Test-->
     <string name="receiver_test_tip">In the receiver test, please pay attention to whether there is sound in the receiver</string>
+    <string name="receiver_test_toast_1">Please test after unplug headset</string>
     <!--endregion-->
 
     <!--region Camera Test-->
