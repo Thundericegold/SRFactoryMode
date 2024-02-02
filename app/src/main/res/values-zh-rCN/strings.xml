@@ -65,6 +65,7 @@
     <string name="battery_temperature">电池温度:</string>
     <string name="battery_temperature_test">25.0</string>
     <string name="centigrade">度</string>
+    <string name="battery_pass_toast">两种充电状态测试完后才可通过</string>
     <!--endregion-->
 
     <!--region Vibration Test-->

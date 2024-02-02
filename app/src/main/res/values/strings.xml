@@ -65,6 +65,7 @@
     <string name="battery_temperature">Battery temperature:</string>
     <string name="battery_temperature_test">25.0</string>
     <string name="centigrade">℃</string>
+    <string name="battery_pass_toast">Only after testing the two charging states can it pass</string>
     <!--endregion-->
 
     <!--region Vibration Test-->

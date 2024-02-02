@@ -8,6 +8,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sagereal.factorymode.R;
 
@@ -16,6 +17,7 @@ public class BatteryTestActivity extends BaseTestActivity {
     TextView currentElectricityTextView;
     TextView batteryVoltageTextView;
     TextView batteryTemperatureTextView;
+    boolean isTestedCharging,isTestedUncharged = false;
 
     private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
@@ -25,8 +27,10 @@ public class BatteryTestActivity extends BaseTestActivity {
                     status == BatteryManager.BATTERY_STATUS_FULL;
             if (isCharging) {
                 chargingStatusTextView.setText(getString(R.string.charging));
+                isTestedCharging = true;
             } else {
                 chargingStatusTextView.setText(getString(R.string.uncharged));
+                isTestedUncharged = true;
             }
 
             // 获取当前电量
@@ -77,9 +81,13 @@ public class BatteryTestActivity extends BaseTestActivity {
     View.OnClickListener onClickListener = v -> {
         int id = v.getId();
         if (id == R.id.pass) {
-            editor.putInt(STATUS_BATTERY, VALUE_PASS);
-            editor.commit();
-            finish();
+            if (isTestedCharging && isTestedUncharged){
+                editor.putInt(STATUS_BATTERY, VALUE_PASS);
+                editor.commit();
+                finish();
+            }else {
+                Toast.makeText(this, getString(R.string.battery_pass_toast), Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.fail) {
             editor.putInt(STATUS_BATTERY, VALUE_FAIL);
             editor.commit();
