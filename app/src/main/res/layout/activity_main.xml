@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/layoutMain"
+    android:id="@+id/main_layout"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -292,11 +292,11 @@
                     android:layout_height="match_parent" />
 
                 <Button
-                    android:id="@+id/screen_off"
+                    android:id="@+id/language"
                     android:layout_width="@dimen/dimen_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/screen_off"
+                    android:text="@string/toggle_language"
                     android:theme="@style/NormalButton" />
             </LinearLayout>
 

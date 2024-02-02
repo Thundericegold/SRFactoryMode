@@ -24,6 +24,7 @@
     <string name="test_report">测试报告</string>
     <string name="exit">退出</string>
     <string name="screen_off">灭屏</string>
+    <string name="toggle_language">English</string>
     <!--endregion-->
 
     <!--region Main Page Test-->

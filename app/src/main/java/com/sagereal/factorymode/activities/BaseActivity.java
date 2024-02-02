@@ -2,9 +2,12 @@ package com.sagereal.factorymode.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sagereal.factorymode.R;
+
+import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public final String STATUS_BATTERY = "battery_status";
@@ -32,6 +37,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public SharedPreferences.Editor editor;
     public final static String SHARED_PREFERENCES_NAME = "MySharedPreferences";
 
+    public Locale locale;
+
     public abstract void initView();
     public abstract void initListener();
 
@@ -42,6 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setNavigationBarVisible(true);
+
+        LocaleList locales = getResources().getConfiguration().getLocales();
+        locale = locales.get(0);
     }
 
     //-----------------------防抖start---------------------------
@@ -80,6 +90,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
         }
         decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    public void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        recreate();
     }
 
 }

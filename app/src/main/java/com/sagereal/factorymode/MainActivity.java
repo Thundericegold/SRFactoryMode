@@ -4,18 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.LocaleList;
 import android.os.PowerManager;
 import android.os.StatFs;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends BaseActivity {
     String phone,deviceName,deviceType,androidVersion,versionNumber,batterySize,screenSizeResult,screenResolution = "";
@@ -41,9 +47,10 @@ public class MainActivity extends BaseActivity {
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
 
+    LinearLayout mainLayout;
     TextView deviceNameTextView, deviceTypeTextView, versionNumberTextView, androidVersionTextView,
             batterySizeTextView, ramTextView, romTextView, screenSizeTextView, screenResolutionTextView;
-    Button cameraButton, dialButton, singleTestButton, testReportButton, exitButton, screenOffButton;
+    Button cameraButton, dialButton, singleTestButton, testReportButton, exitButton, languageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +152,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mainLayout = findViewById(R.id.main_layout);
         deviceNameTextView = findViewById(R.id.device_name);
         deviceTypeTextView = findViewById(R.id.device_type);
         versionNumberTextView = findViewById(R.id.version_number);
@@ -159,7 +167,7 @@ public class MainActivity extends BaseActivity {
         singleTestButton = findViewById(R.id.single_test);
         testReportButton = findViewById(R.id.test_report);
         exitButton = findViewById(R.id.exit);
-        screenOffButton = findViewById(R.id.screen_off);
+        languageButton = findViewById(R.id.language);
     }
 
     @Override
@@ -169,7 +177,7 @@ public class MainActivity extends BaseActivity {
         singleTestButton.setOnClickListener(onClickListener);
         testReportButton.setOnClickListener(onClickListener);
         exitButton.setOnClickListener(onClickListener);
-        screenOffButton.setOnClickListener(onClickListener);
+        languageButton.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = view -> {
@@ -186,8 +194,9 @@ public class MainActivity extends BaseActivity {
             startActivity(intent2);
         } else if (id == R.id.exit) {
             finish();
-        } else if (id == R.id.screen_off) {
-            screenOff();
+            System.exit(0);
+        } else if (id == R.id.language) {
+            toggleLanguage();
         }
     };
 
@@ -195,7 +204,8 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         long currentBackDownTime = System.currentTimeMillis();
         if (currentBackDownTime - lastBackDownTime < 1000) {
-            super.onBackPressed();
+            finish();
+            System.exit(0);
         } else {
             Toast.makeText(this, getString(R.string.back_toast), Toast.LENGTH_SHORT).show();
             lastBackDownTime = currentBackDownTime;
@@ -301,7 +311,12 @@ public class MainActivity extends BaseActivity {
         return Math.sqrt(x + y);
     }
 
-    private void screenOff(){
-
+    private void toggleLanguage(){
+        if (locale.getLanguage().equals(new Locale("zh").getLanguage())){
+            setLocale("en");
+        }else {
+            setLocale("zh");
+        }
     }
+
 }
