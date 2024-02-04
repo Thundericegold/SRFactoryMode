@@ -5,18 +5,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.sagereal.factorymode.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FlashTestActivity extends BaseTestActivity {
     Button toggleButton;
     private CameraManager mCameraManager;
-    private String mCameraIdFront,mCameraIdBack;
     private Boolean isTorchOn = true;
 
     @Override
@@ -104,7 +110,11 @@ public class FlashTestActivity extends BaseTestActivity {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 for (String mCameraId : mCameraManager.getCameraIdList()) {
-                    mCameraManager.setTorchMode(mCameraId, true);
+                    CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
+                    Boolean flashAvailable = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                    if (flashAvailable){
+                        mCameraManager.setTorchMode(mCameraId, true);
+                    }
                 }
                 isTorchOn = true;
                 toggleButton.setText(R.string.flashlight_turn_off);
@@ -118,7 +128,11 @@ public class FlashTestActivity extends BaseTestActivity {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 for (String mCameraId : mCameraManager.getCameraIdList()) {
-                    mCameraManager.setTorchMode(mCameraId, false);
+                    CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
+                    Boolean flashAvailable = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                    if (flashAvailable){
+                        mCameraManager.setTorchMode(mCameraId, false);
+                    }
                 }
                 isTorchOn = false;
                 toggleButton.setText(R.string.flashlight_turn_on);
