@@ -113,6 +113,7 @@ public class MikeTestActivity extends BaseTestActivity {
                 mediaPlayer.setDataSource(MikeTestActivity.this, Uri.parse(outputPath));
                 audioManager.setMode(AudioManager.MODE_IN_CALL);
                 audioManager.setSpeakerphoneOn(true);
+                fixVolume();
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             } catch (IOException e) {
@@ -183,6 +184,12 @@ public class MikeTestActivity extends BaseTestActivity {
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
         }
+    }
+
+    private void fixVolume() {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume/2, AudioManager.FLAG_SHOW_UI);
     }
 
     private void startRecording(String outputFile) {
