@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,10 +67,17 @@ public class SpeakerTestActivity extends BaseTestActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        fixVolume();
         mediaPlayer = MediaPlayer.create(SpeakerTestActivity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.anjing));
         mediaPlayer.start();
         isPlaying = true;
         isTested = true;
+    }
+
+    private void fixVolume() {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume/2, AudioManager.FLAG_SHOW_UI);
     }
 
     @Override
@@ -95,6 +103,7 @@ public class SpeakerTestActivity extends BaseTestActivity {
                 if (state == 0) {
                     if (!isPlaying){
                         tipTextView.setText(R.string.speaker_test_tip);
+                        fixVolume();
                         mediaPlayer = MediaPlayer.create(SpeakerTestActivity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.anjing));
                         mediaPlayer.start();
                         isPlaying = true;
